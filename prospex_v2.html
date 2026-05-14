@@ -1,0 +1,3761 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Prospex BI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+/* ============================================================
+   Prospex BI — Design tokens
+   ============================================================ */
+:root {
+  /* ── DEFAULT PALETTE: mono + blue ──────────────────────── */
+  --ink: #09090b;
+  --ink-soft: #27272a;
+  --muted: #71717a;
+  --bg: #ffffff;
+  --bg-tinted: #f4f4f5;
+  --surface: #ffffff;
+  --surface-2: #fafafa;
+  --surface-inverse: #09090b;
+  --on-inverse: #fafafa;
+  --on-inverse-muted: #a1a1aa;
+
+  --accent: #2563eb;
+  --accent-ink: #ffffff;
+  --accent-soft: #dbeafe;
+  --accent-strong: #1d4ed8;
+
+  --positive: #16a34a;
+  --positive-soft: #dcfce7;
+  --positive-ink: #14532d;
+
+  --warn: #d97706;
+  --warn-soft: #fef3c7;
+  --warn-ink: #92400e;
+
+  --danger: #dc2626;
+  --danger-soft: #fee2e2;
+  --danger-ink: #991b1b;
+
+  --info: #0284c7;
+  --info-soft: #e0f2fe;
+
+  --border: #e4e4e7;
+  --border-strong: #d4d4d8;
+
+  --shadow-sm: 0 1px 2px rgba(9, 9, 11, 0.04);
+  --shadow-md: 0 4px 14px rgba(9, 9, 11, 0.06), 0 1px 3px rgba(9, 9, 11, 0.04);
+  --shadow-lg: 0 24px 60px -20px rgba(9, 9, 11, 0.18), 0 8px 20px -8px rgba(9, 9, 11, 0.12);
+  --shadow-card: 0 1px 0 rgba(9, 9, 11, 0.04), 0 1px 3px rgba(9, 9, 11, 0.06);
+
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* density-controlled spacing */
+  --pad-screen: 20px;
+  --pad-card: 18px;
+  --gap-list: 12px;
+  --gap-section: 24px;
+  --line-h: 1.45;
+  --fs-body: 15px;
+  --fs-small: 13px;
+  --fs-micro: 11px;
+}
+
+/* ============================================================
+   Alternate palettes (toggle via [data-palette])
+   ============================================================ */
+
+/* warm — the original cream + coral */
+:root[data-palette="warm"] {
+  --ink: #15110e;
+  --ink-soft: #4a4339;
+  --muted: #7a6f62;
+  --bg: #f4efe6;
+  --bg-tinted: #ece6d8;
+  --surface: #ffffff;
+  --surface-2: #faf6ef;
+  --surface-inverse: #15110e;
+  --on-inverse: #f4efe6;
+  --on-inverse-muted: #a89e8e;
+  --accent: #e94b27;
+  --accent-soft: #fbe8df;
+  --accent-strong: #c83a18;
+  --positive: #1f7a3a;
+  --positive-soft: #dff1e4;
+  --positive-ink: #0f4d22;
+  --warn: #a86512;
+  --warn-soft: #faefd3;
+  --warn-ink: #7a4707;
+  --danger: #b91c1c;
+  --danger-soft: #fbe3e3;
+  --danger-ink: #7e1212;
+  --info: #1f4f8a;
+  --info-soft: #e1ebf7;
+  --border: #ebe2d2;
+  --border-strong: #d9cdb7;
+}
+
+/* lime — sharp mono + electric green */
+:root[data-palette="lime"] {
+  --bg: #fafafa;
+  --bg-tinted: #f4f4f5;
+  --accent: #65a30d;
+  --accent-ink: #ffffff;
+  --accent-soft: #ecfccb;
+  --accent-strong: #4d7c0f;
+}
+
+/* navy — corporate deep blue */
+:root[data-palette="navy"] {
+  --ink: #0c2340;
+  --ink-soft: #1e3a5f;
+  --muted: #64748b;
+  --bg: #f8fafc;
+  --bg-tinted: #f1f5f9;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --surface-inverse: #0c2340;
+  --on-inverse: #f0f9ff;
+  --on-inverse-muted: #94a3b8;
+  --accent: #0891b2;
+  --accent-soft: #cffafe;
+  --accent-strong: #0e7490;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+}
+
+/* plum — neutral stone + purple pop */
+:root[data-palette="plum"] {
+  --bg: #fafaf9;
+  --bg-tinted: #f5f5f4;
+  --ink: #1c1917;
+  --ink-soft: #44403c;
+  --muted: #78716c;
+  --surface-inverse: #1c1917;
+  --accent: #9333ea;
+  --accent-soft: #f3e8ff;
+  --accent-strong: #7e22ce;
+  --border: #e7e5e4;
+  --border-strong: #d6d3d1;
+}
+
+:root[data-density="compact"] {
+  --pad-screen: 16px;
+  --pad-card: 14px;
+  --gap-list: 8px;
+  --gap-section: 18px;
+  --line-h: 1.35;
+  --fs-body: 14px;
+  --fs-small: 12px;
+}
+
+:root[data-theme="dark"] {
+  --ink: #fafafa;
+  --ink-soft: #d4d4d8;
+  --muted: #a1a1aa;
+  --bg: #09090b;
+  --bg-tinted: #18181b;
+  --surface: #18181b;
+  --surface-2: #27272a;
+  --surface-inverse: #fafafa;
+  --on-inverse: #09090b;
+  --on-inverse-muted: #52525b;
+
+  --accent: #60a5fa;
+  --accent-ink: #0c1e3e;
+  --accent-soft: #1e293b;
+  --accent-strong: #93c5fd;
+
+  --positive: #4ade80;
+  --positive-soft: #14532d;
+  --positive-ink: #bbf7d0;
+
+  --warn: #fbbf24;
+  --warn-soft: #422006;
+  --warn-ink: #fde68a;
+
+  --danger: #f87171;
+  --danger-soft: #450a0a;
+  --danger-ink: #fecaca;
+
+  --info: #38bdf8;
+  --info-soft: #082f49;
+
+  --border: #27272a;
+  --border-strong: #3f3f46;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 24px 60px -20px rgba(0, 0, 0, 0.6), 0 8px 20px -8px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Warm palette in dark mode */
+:root[data-theme="dark"][data-palette="warm"] {
+  --ink: #f1ebde;
+  --bg: #0e0c0a;
+  --bg-tinted: #181410;
+  --surface: #1c1814;
+  --surface-2: #25201a;
+  --on-inverse: #15110e;
+  --on-inverse-muted: #5a5145;
+  --accent: #ff6a45;
+  --accent-soft: #3a1e15;
+  --border: #2c251d;
+  --border-strong: #3d342a;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Geist', 'Inter', system-ui, sans-serif;
+  font-feature-settings: 'cv11', 'ss01', 'ss02';
+  background: var(--bg-tinted);
+  color: var(--ink);
+  font-size: var(--fs-body);
+  line-height: var(--line-h);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+button { font-family: inherit; cursor: pointer; }
+input, textarea, select { font-family: inherit; }
+
+/* ============================================================
+   App stage — mobile-first centered device
+   ============================================================ */
+.stage {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 16px 32px;
+  background:
+    radial-gradient(1200px 600px at 50% -100px, color-mix(in srgb, var(--accent) 14%, transparent) 0%, transparent 60%),
+    var(--bg-tinted);
+}
+.device {
+  width: 390px;
+  max-width: 100%;
+  min-height: 844px;
+  background: var(--bg);
+  border-radius: 36px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+}
+@media (max-width: 440px) {
+  .stage { padding: 0; }
+  .device { border-radius: 0; min-height: 100vh; width: 100vw; box-shadow: none; }
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+}
+.header-back {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  transition: transform 0.12s ease, background 0.15s ease;
+}
+.header-back:hover { background: var(--surface-2); }
+.header-back:active { transform: scale(0.94); }
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+.header-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  min-width: 0;
+}
+.header-title .name {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.header-title .name em {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 17px;
+}
+.header-title .sub {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
+}
+.icon-btn:hover { background: var(--surface); border-color: var(--border); }
+.icon-btn:active { transform: scale(0.94); }
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--bg);
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   Logo
+   ============================================================ */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 50%;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+  position: relative;
+}
+.logo::after {
+  content: '';
+  position: absolute;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  top: 18%;
+  right: 14%;
+}
+.logo.s { width: 28px; height: 28px; font-size: 18px; }
+.logo.s::after { width: 4px; height: 4px; }
+.logo.m { width: 44px; height: 44px; font-size: 28px; }
+.logo.l { width: 84px; height: 84px; font-size: 54px; box-shadow: var(--shadow-md); }
+.logo.l::after { width: 10px; height: 10px; top: 16%; right: 14%; }
+.logo .glyph { transform: translate(-1px, -2px); }
+
+/* ============================================================
+   Screen body
+   ============================================================ */
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+.screen-pad { padding: var(--pad-screen); }
+.screen-pad-x { padding-left: var(--pad-screen); padding-right: var(--pad-screen); }
+
+.section { margin-bottom: var(--gap-section); }
+.section-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 600;
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.section-title .count {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 18px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+
+/* ============================================================
+   Typography utilities
+   ============================================================ */
+.eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  font-weight: 600;
+}
+.h1 {
+  font-size: 30px;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  margin: 0;
+}
+.h1 em {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 34px;
+}
+.h2 {
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+  margin: 0;
+}
+.h3 {
+  font-size: 17px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  margin: 0;
+}
+.lede {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 6px 0 0;
+}
+.mono-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  border: 1px solid transparent;
+  transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  background: var(--surface);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.btn-primary:hover { background: color-mix(in srgb, var(--ink) 88%, var(--accent)); }
+.btn-accent {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--border-strong);
+}
+.btn-outline:hover { background: var(--surface); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: transparent;
+}
+.btn-ghost:hover { background: var(--surface); }
+.btn-block { width: 100%; }
+.btn-sm { padding: 8px 12px; font-size: 13px; border-radius: 10px; }
+
+/* ============================================================
+   Cards
+   ============================================================ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--pad-card);
+  box-shadow: var(--shadow-card);
+}
+.card-tap {
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.card-tap:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+.card-tap:active { transform: scale(0.985); }
+.card-dark {
+  background: var(--surface-inverse);
+  color: var(--on-inverse);
+  border-color: var(--surface-inverse);
+}
+.card-dark .muted { color: var(--on-inverse-muted); }
+
+/* ============================================================
+   Inputs
+   ============================================================ */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: -0.005em;
+}
+.input, .select, .textarea {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: var(--ink);
+  font-size: 15px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input:focus, .select:focus, .textarea:focus {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ink) 8%, transparent);
+}
+.textarea { resize: vertical; min-height: 96px; line-height: 1.5; }
+.input-icon {
+  position: relative;
+}
+.input-icon > svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+.input-icon .input { padding-left: 42px; }
+
+/* ============================================================
+   Chips (filters)
+   ============================================================ */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+.chip:hover { border-color: var(--border-strong); }
+.chip:active { transform: scale(0.96); }
+.chip.is-active {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.chip.is-active .chip-x { opacity: 0.7; }
+
+/* ============================================================
+   Filter bar — compact toolbar with active filter chips
+   ============================================================ */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  margin-top: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.filter-bar::-webkit-scrollbar { display: none; }
+.filter-bar.is-sticky {
+  position: sticky;
+  top: 60px;
+  z-index: 20;
+  background: linear-gradient(to bottom, var(--bg) 60%, color-mix(in srgb, var(--bg) 0%, transparent));
+  margin-left: calc(-1 * var(--pad-screen));
+  margin-right: calc(-1 * var(--pad-screen));
+  padding-left: var(--pad-screen);
+  padding-right: var(--pad-screen);
+}
+.filter-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+.filter-trigger:hover { background: var(--surface-2); }
+.filter-trigger:active { transform: scale(0.96); }
+.filter-trigger.has-active {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.filter-count {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-grid;
+  place-items: center;
+  margin-left: 2px;
+}
+.filter-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+.filter-clear {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.filter-clear:hover { color: var(--ink); }
+
+/* ============================================================
+   Bottom sheet (modal that slides up from bottom of device)
+   ============================================================ */
+.sheet-overlay {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--ink) 35%, transparent);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.24s ease;
+  display: flex;
+  align-items: flex-end;
+  justify-content: stretch;
+}
+.sheet-overlay.is-open { opacity: 1; pointer-events: auto; }
+.sheet {
+  width: 100%;
+  background: var(--bg);
+  border-radius: 24px 24px 0 0;
+  padding: 8px 20px 20px;
+  transform: translateY(100%);
+  transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+  max-height: 85%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.2);
+}
+.sheet-overlay.is-open .sheet { transform: translateY(0); }
+.sheet-grab {
+  width: 40px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border-strong);
+  margin: 4px auto 12px;
+  flex-shrink: 0;
+}
+.sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+.sheet-body { overflow-y: auto; padding-bottom: 8px; }
+
+/* ============================================================
+   Badges
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: var(--bg-tinted);
+  color: var(--ink-soft);
+  border: 1px solid var(--border);
+}
+.badge-active   { background: var(--positive-soft); color: var(--positive-ink); border-color: transparent; }
+.badge-inactive { background: var(--bg-tinted); color: var(--muted); border-color: transparent; }
+.badge-accent   { background: var(--accent-soft); color: var(--accent-strong); border-color: transparent; }
+.badge-warn     { background: var(--warn-soft); color: var(--warn-ink); border-color: transparent; }
+.badge-danger   { background: var(--danger-soft); color: var(--danger-ink); border-color: transparent; }
+.badge-info     { background: var(--info-soft); color: var(--info); border-color: transparent; }
+.badge-counter {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 12px;
+  display: inline-grid;
+  place-items: center;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.badge-counter.accent { background: var(--accent); color: var(--accent-ink); }
+
+/* ============================================================
+   Avatar (client initial)
+   ============================================================ */
+.avatar-init {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--bg-tinted);
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+.avatar-init.sm { width: 32px; height: 32px; font-size: 12px; border-radius: 10px; }
+.avatar-init.tone-1 { background: #f4e1d8; color: #82391d; }
+.avatar-init.tone-2 { background: #e6e4d4; color: #4f4a26; }
+.avatar-init.tone-3 { background: #dbe6dd; color: #265033; }
+.avatar-init.tone-4 { background: #d9e1ea; color: #1f4063; }
+.avatar-init.tone-5 { background: #ede2ea; color: #6a2851; }
+.avatar-init.tone-6 { background: #efe2c4; color: #6a4a14; }
+:root[data-theme="dark"] .avatar-init.tone-1 { background: #3d241b; color: #f0b59b; }
+:root[data-theme="dark"] .avatar-init.tone-2 { background: #2e2c1f; color: #d6cfa3; }
+:root[data-theme="dark"] .avatar-init.tone-3 { background: #1f3026; color: #a8d6b6; }
+:root[data-theme="dark"] .avatar-init.tone-4 { background: #1f2a38; color: #a8c2dd; }
+:root[data-theme="dark"] .avatar-init.tone-5 { background: #2e1f2a; color: #d8a8c4; }
+:root[data-theme="dark"] .avatar-init.tone-6 { background: #2e2618; color: #e7c682; }
+
+/* ============================================================
+   Alerts (home conditional banners)
+   ============================================================ */
+.alert {
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.alert-danger { border-color: color-mix(in srgb, var(--danger) 30%, var(--border)); background: var(--danger-soft); }
+.alert-warn { border-color: color-mix(in srgb, var(--warn) 30%, var(--border)); background: var(--warn-soft); }
+.alert-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.alert-head .ico {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.alert-danger .ico { background: var(--danger); color: white; }
+.alert-warn .ico { background: var(--warn); color: white; }
+.alert-head .title {
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: -0.005em;
+  flex: 1;
+}
+.alert-danger .title { color: var(--danger-ink); }
+.alert-warn .title { color: var(--warn-ink); }
+.alert-head .sub {
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 2px;
+}
+.alert-danger .sub { color: color-mix(in srgb, var(--danger-ink) 80%, transparent); }
+.alert-warn .sub { color: color-mix(in srgb, var(--warn-ink) 80%, transparent); }
+.alert-dismiss {
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  flex-shrink: 0;
+  margin: -3px -3px 0 0;
+}
+.alert-dismiss:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.alert-list { display: flex; flex-direction: column; gap: 6px; }
+.alert-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 50%, transparent);
+}
+.alert-row .name { font-weight: 600; font-size: 13px; flex: 1; min-width: 0; }
+.alert-row .name .city { color: var(--muted); font-weight: 500; }
+.alert-row .counter {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.alert-danger .alert-row .counter { color: var(--danger); }
+
+/* ============================================================
+   Module list (home cards)
+   ============================================================ */
+.module-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+.module-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+.module-card:active { transform: scale(0.985); }
+.module-card .mod-ico {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.module-card .mod-text {
+  flex: 1; min-width: 0;
+}
+.module-card .mod-title {
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.module-card .mod-desc {
+  color: var(--muted);
+  font-size: 12.5px;
+  margin: 2px 0 0;
+  line-height: 1.35;
+}
+.module-card .mod-end {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.mod-ico.t-diag    { background: #dbeafe; color: #1e40af; }
+.mod-ico.t-prosp   { background: #fee2e2; color: #b91c1c; }
+.mod-ico.t-map     { background: #dcfce7; color: #15803d; }
+.mod-ico.t-indic   { background: #f3e8ff; color: #7e22ce; }
+.mod-ico.t-check   { background: #fef3c7; color: #92400e; }
+:root[data-theme="dark"] .mod-ico.t-diag    { background: #1e293b; color: #93c5fd; }
+:root[data-theme="dark"] .mod-ico.t-prosp   { background: #3b1212; color: #fca5a5; }
+:root[data-theme="dark"] .mod-ico.t-map     { background: #14291a; color: #86efac; }
+:root[data-theme="dark"] .mod-ico.t-indic   { background: #2e1838; color: #d8b4fe; }
+:root[data-theme="dark"] .mod-ico.t-check   { background: #3d2a10; color: #fcd34d; }
+
+/* ============================================================
+   Client list row
+   ============================================================ */
+.list { display: flex; flex-direction: column; gap: var(--gap-list); }
+.client-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.client-row:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); }
+.client-row:active { transform: scale(0.99); }
+.client-row .body { flex: 1; min-width: 0; }
+.client-row .name {
+  font-weight: 600;
+  font-size: 14.5px;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.client-row .sub {
+  font-size: 12.5px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+.client-row .sub .dot { width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: 0.5; }
+.client-row .end { display: flex; align-items: center; gap: 10px; flex-shrink: 0; color: var(--muted); }
+
+/* ============================================================
+   KPI grid (diagnostico/prospeccao detail)
+   ============================================================ */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.kpi {
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.kpi .lbl {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  font-weight: 600;
+}
+.kpi .val {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.kpi .val.small { font-size: 14px; }
+
+/* Big KPI on dashboard */
+.kpi-big {
+  padding: 20px;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 22px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi-big::before {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle at center, var(--accent) 0%, transparent 60%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+.kpi-big .lbl {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: color-mix(in srgb, var(--bg) 60%, transparent);
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+.kpi-big .val {
+  font-size: 38px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+  position: relative;
+  z-index: 1;
+}
+.kpi-big .val em {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 30px;
+  margin-right: 4px;
+  color: color-mix(in srgb, var(--bg) 70%, transparent);
+}
+.kpi-big .delta {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+  color: #93e6a8;
+}
+
+/* ============================================================
+   Score circle
+   ============================================================ */
+.score {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  flex-shrink: 0;
+}
+.score svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.score .track { stroke: color-mix(in srgb, currentColor 25%, transparent); }
+.score .fill { stroke: var(--accent); transition: stroke-dashoffset 0.8s ease; }
+.score .label {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.score .label em {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--on-inverse-muted);
+  font-size: 11px;
+  margin-left: 1px;
+}
+
+/* ============================================================
+   Pill tabs (diagnostico)
+   ============================================================ */
+.pills {
+  display: inline-flex;
+  background: var(--bg-tinted);
+  border-radius: 999px;
+  padding: 4px;
+  width: 100%;
+  gap: 0;
+}
+.pill {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px 14px;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--muted);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.pill.is-active {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(21,17,14,0.08);
+}
+
+/* ============================================================
+   Bordered item list (analise oportunidades / atenção / cortes)
+   ============================================================ */
+.bordered-list { display: flex; flex-direction: column; gap: 8px; }
+.bordered-item {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border-left: 3px solid var(--border);
+  background: var(--surface-2);
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+.bordered-item.positive { border-left-color: var(--positive); }
+.bordered-item.danger { border-left-color: var(--danger); }
+.bordered-item.info { border-left-color: var(--info); }
+.bordered-item strong { font-weight: 600; }
+
+/* ============================================================
+   Map
+   ============================================================ */
+.map-wrap {
+  position: relative;
+  height: 280px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, #e8e2d2 0%, #ddd5c2 100%);
+}
+:root[data-theme="dark"] .map-wrap {
+  background: linear-gradient(135deg, #1a1612 0%, #221c16 100%);
+}
+.map-pin {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  cursor: pointer;
+}
+.map-pin .head {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  position: relative;
+}
+.map-pin .head::after {
+  content: '';
+  position: absolute;
+  bottom: -6px; left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px; height: 8px;
+  background: inherit;
+  border-right: 3px solid white;
+  border-bottom: 3px solid white;
+}
+/* Map pin colors — use accent for prospect/route, fixed greens/grays for status */
+.map-pin.s-active   { color: var(--positive); }
+.map-pin.s-inactive { color: var(--muted); }
+.map-pin.s-prospect { color: var(--accent); }
+.map-pin.s-route    { color: var(--info); }
+.map-pin .head { background: currentColor; }
+.map-pin.in-route::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  opacity: 0.3;
+  animation: ping 1.6s ease-out infinite;
+}
+@keyframes ping {
+  0% { transform: scale(0.6); opacity: 0.6; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+  margin-top: 12px;
+}
+.legend .swatch {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   Route panel
+   ============================================================ */
+.route-point {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--surface-2);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.route-point .num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--bg);
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+.route-point .name { flex: 1; font-size: 14px; font-weight: 500; min-width: 0; }
+.route-point .x {
+  width: 24px; height: 24px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+}
+.route-point .x:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); color: var(--ink); }
+
+.ai-box {
+  margin-top: 12px;
+  padding: 12px;
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+  border-radius: 14px;
+}
+.ai-box .lbl {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--accent-strong);
+}
+.ai-box .body {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+/* ============================================================
+   Progress bar
+   ============================================================ */
+.progress {
+  height: 6px;
+  background: var(--bg-tinted);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+.progress .bar {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--ink);
+  border-radius: 999px;
+  transition: width 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.progress.accent .bar { background: var(--accent); }
+.progress.positive .bar { background: var(--positive); }
+
+/* ============================================================
+   Visit card (Última visita)
+   ============================================================ */
+.visit-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  position: relative;
+}
+.visit-card.pending {
+  border-left: 4px solid var(--accent);
+}
+.visit-card .ico {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.visit-card .body { flex: 1; min-width: 0; }
+.visit-card .name { font-weight: 600; font-size: 14px; }
+.visit-card .result { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.visit-card .date { font-size: 12px; color: var(--muted); flex-shrink: 0; font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   Checkbox (ficha visita)
+   ============================================================ */
+.check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.check-row:hover { background: var(--surface-2); }
+.check-row .box {
+  width: 20px; height: 20px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border-strong);
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  margin-top: 1px;
+}
+.check-row .lbl { font-size: 13.5px; line-height: 1.4; }
+.check-row.is-checked .box {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+.check-row.is-checked .lbl {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--muted) 60%, transparent);
+}
+
+/* ============================================================
+   Success toast (check-in)
+   ============================================================ */
+.toast-success {
+  position: absolute;
+  left: 16px; right: 16px;
+  bottom: 16px;
+  background: var(--positive);
+  color: white;
+  padding: 14px 16px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 12px 30px -10px rgba(31, 122, 58, 0.5);
+  animation: toastIn 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+  z-index: 50;
+}
+@keyframes toastIn {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.toast-success.is-leaving { animation: toastOut 0.3s ease forwards; }
+@keyframes toastOut {
+  to { transform: translateY(20px); opacity: 0; }
+}
+
+/* ============================================================
+   Spinner (AI thinking)
+   ============================================================ */
+.spinner-block {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.spinner {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 3px solid var(--bg-tinted);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner-text {
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   Animations
+   ============================================================ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fadeIn 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.fade-in-delay-1 { animation: fadeIn 0.4s 0.05s cubic-bezier(0.2,0.7,0.2,1) backwards; }
+.fade-in-delay-2 { animation: fadeIn 0.4s 0.1s cubic-bezier(0.2,0.7,0.2,1) backwards; }
+.fade-in-delay-3 { animation: fadeIn 0.4s 0.15s cubic-bezier(0.2,0.7,0.2,1) backwards; }
+
+.screen-enter { animation: screenIn 0.32s cubic-bezier(0.2, 0.7, 0.2, 1); }
+@keyframes screenIn {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ============================================================
+   Helpers
+   ============================================================ */
+.row { display: flex; align-items: center; }
+.row-between { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+.flex-1 { flex: 1; }
+.mt-1 { margin-top: 6px; } .mt-2 { margin-top: 10px; } .mt-3 { margin-top: 14px; } .mt-4 { margin-top: 18px; } .mt-5 { margin-top: 24px; }
+.mb-1 { margin-bottom: 6px; } .mb-2 { margin-bottom: 10px; } .mb-3 { margin-bottom: 14px; } .mb-4 { margin-bottom: 18px; }
+.txt-muted { color: var(--muted); }
+.txt-accent { color: var(--accent); }
+.txt-positive { color: var(--positive); }
+.txt-danger { color: var(--danger); }
+.txt-12 { font-size: 12px; } .txt-13 { font-size: 13px; } .txt-14 { font-size: 14px; }
+.fw-6 { font-weight: 600; }
+.tabular { font-variant-numeric: tabular-nums; }
+.divider { height: 1px; background: var(--border); margin: 16px 0; border: none; }
+.italic-serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
+
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+
+  <script type="text/babel" data-presets="react">
+/* =========================================================================
+   TWEAKS PANEL — floating dev panel (palette/theme/density + screen jumper)
+   ========================================================================= */
+
+// tweaks-panel.jsx
+// Reusable Tweaks shell + form-control helpers.
+//
+// Owns the host protocol (listens for __activate_edit_mode / __deactivate_edit_mode,
+// posts __edit_mode_available / __edit_mode_set_keys / __edit_mode_dismissed) so
+// individual prototypes don't re-roll it. Ships a consistent set of controls so you
+// don't hand-draw <input type="range">, segmented radios, steppers, etc.
+//
+// Usage (in an HTML file that loads React + Babel):
+//
+//   const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+//     "primaryColor": "#D97757",
+//     "palette": ["#D97757", "#29261b", "#f6f4ef"],
+//     "fontSize": 16,
+//     "density": "regular",
+//     "dark": false
+//   }/*EDITMODE-END*/;
+//
+//   function App() {
+//     const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+//     return (
+//       <div style={{ fontSize: t.fontSize, color: t.primaryColor }}>
+//         Hello
+//         <TweaksPanel>
+//           <TweakSection label="Typography" />
+//           <TweakSlider label="Font size" value={t.fontSize} min={10} max={32} unit="px"
+//                        onChange={(v) => setTweak('fontSize', v)} />
+//           <TweakRadio  label="Density" value={t.density}
+//                        options={['compact', 'regular', 'comfy']}
+//                        onChange={(v) => setTweak('density', v)} />
+//           <TweakSection label="Theme" />
+//           <TweakColor  label="Primary" value={t.primaryColor}
+//                        options={['#D97757', '#2A6FDB', '#1F8A5B', '#7A5AE0']}
+//                        onChange={(v) => setTweak('primaryColor', v)} />
+//           <TweakColor  label="Palette" value={t.palette}
+//                        options={[['#D97757', '#29261b', '#f6f4ef'],
+//                                  ['#475569', '#0f172a', '#f1f5f9']]}
+//                        onChange={(v) => setTweak('palette', v)} />
+//           <TweakToggle label="Dark mode" value={t.dark}
+//                        onChange={(v) => setTweak('dark', v)} />
+//         </TweaksPanel>
+//       </div>
+//     );
+//   }
+//
+// ─────────────────────────────────────────────────────────────────────────────
+
+const __TWEAKS_STYLE = `
+  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:280px;
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;
+    transform:scale(var(--dc-inv-zoom,1));transform-origin:bottom right;
+    background:rgba(250,249,247,.78);color:#29261b;
+    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
+    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 12px 40px rgba(0,0,0,.18);
+    font:11.5px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
+  .twk-hd{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 8px 10px 14px;cursor:move;user-select:none}
+  .twk-hd b{font-size:12px;font-weight:600;letter-spacing:.01em}
+  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);
+    width:22px;height:22px;border-radius:6px;cursor:default;font-size:13px;line-height:1}
+  .twk-x:hover{background:rgba(0,0,0,.06);color:#29261b}
+  .twk-body{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px;
+    overflow-y:auto;overflow-x:hidden;min-height:0;
+    scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
+  .twk-body::-webkit-scrollbar{width:8px}
+  .twk-body::-webkit-scrollbar-track{background:transparent;margin:2px}
+  .twk-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:4px;
+    border:2px solid transparent;background-clip:content-box}
+  .twk-body::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.25);
+    border:2px solid transparent;background-clip:content-box}
+  .twk-row{display:flex;flex-direction:column;gap:5px}
+  .twk-row-h{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
+  .twk-lbl{display:flex;justify-content:space-between;align-items:baseline;
+    color:rgba(41,38,27,.72)}
+  .twk-lbl>span:first-child{font-weight:500}
+  .twk-val{color:rgba(41,38,27,.5);font-variant-numeric:tabular-nums}
+
+  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(41,38,27,.45);padding:10px 0 0}
+  .twk-sect:first-child{padding-top:0}
+
+  .twk-field{appearance:none;box-sizing:border-box;width:100%;min-width:0;height:26px;padding:0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;
+    background:rgba(255,255,255,.6);color:inherit;font:inherit;outline:none}
+  .twk-field:focus{border-color:rgba(0,0,0,.25);background:rgba(255,255,255,.85)}
+  select.twk-field{padding-right:22px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='rgba(0,0,0,.5)' d='M0 0h10L5 6z'/></svg>");
+    background-repeat:no-repeat;background-position:right 8px center}
+
+  .twk-slider{appearance:none;-webkit-appearance:none;width:100%;height:4px;margin:6px 0;
+    border-radius:999px;background:rgba(0,0,0,.12);outline:none}
+  .twk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+    width:14px;height:14px;border-radius:50%;background:#fff;
+    border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
+    background:#fff;border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+
+  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;
+    background:rgba(0,0,0,.06);user-select:none}
+  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;
+    background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.12);
+    transition:left .15s cubic-bezier(.3,.7,.4,1),width .15s}
+  .twk-seg.dragging .twk-seg-thumb{transition:none}
+  .twk-seg button{appearance:none;position:relative;z-index:1;flex:1;border:0;
+    background:transparent;color:inherit;font:inherit;font-weight:500;min-height:22px;
+    border-radius:6px;cursor:default;padding:4px 6px;line-height:1.2;
+    overflow-wrap:anywhere}
+
+  .twk-toggle{position:relative;width:32px;height:18px;border:0;border-radius:999px;
+    background:rgba(0,0,0,.15);transition:background .15s;cursor:default;padding:0}
+  .twk-toggle[data-on="1"]{background:#34c759}
+  .twk-toggle i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+  .twk-toggle[data-on="1"] i{transform:translateX(14px)}
+
+  .twk-num{display:flex;align-items:center;box-sizing:border-box;min-width:0;height:26px;padding:0 0 0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;background:rgba(255,255,255,.6)}
+  .twk-num-lbl{font-weight:500;color:rgba(41,38,27,.6);cursor:ew-resize;
+    user-select:none;padding-right:8px}
+  .twk-num input{flex:1;min-width:0;height:100%;border:0;background:transparent;
+    font:inherit;font-variant-numeric:tabular-nums;text-align:right;padding:0 8px 0 0;
+    outline:none;color:inherit;-moz-appearance:textfield}
+  .twk-num input::-webkit-inner-spin-button,.twk-num input::-webkit-outer-spin-button{
+    -webkit-appearance:none;margin:0}
+  .twk-num-unit{padding-right:8px;color:rgba(41,38,27,.45)}
+
+  .twk-btn{appearance:none;height:26px;padding:0 12px;border:0;border-radius:7px;
+    background:rgba(0,0,0,.78);color:#fff;font:inherit;font-weight:500;cursor:default}
+  .twk-btn:hover{background:rgba(0,0,0,.88)}
+  .twk-btn.secondary{background:rgba(0,0,0,.06);color:inherit}
+  .twk-btn.secondary:hover{background:rgba(0,0,0,.1)}
+
+  .twk-swatch{appearance:none;-webkit-appearance:none;width:56px;height:22px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:6px;padding:0;cursor:default;
+    background:transparent;flex-shrink:0}
+  .twk-swatch::-webkit-color-swatch-wrapper{padding:0}
+  .twk-swatch::-webkit-color-swatch{border:0;border-radius:5.5px}
+  .twk-swatch::-moz-color-swatch{border:0;border-radius:5.5px}
+
+  .twk-chips{display:flex;gap:6px}
+  .twk-chip{position:relative;appearance:none;flex:1;min-width:0;height:46px;
+    padding:0;border:0;border-radius:6px;overflow:hidden;cursor:default;
+    box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.06);
+    transition:transform .12s cubic-bezier(.3,.7,.4,1),box-shadow .12s}
+  .twk-chip:hover{transform:translateY(-1px);
+    box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 4px 10px rgba(0,0,0,.12)}
+  .twk-chip[data-on="1"]{box-shadow:0 0 0 1.5px rgba(0,0,0,.85),
+    0 2px 6px rgba(0,0,0,.15)}
+  .twk-chip>span{position:absolute;top:0;bottom:0;right:0;width:34%;
+    display:flex;flex-direction:column;box-shadow:-1px 0 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i{flex:1;box-shadow:0 -1px 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i:first-child{box-shadow:none}
+  .twk-chip svg{position:absolute;top:6px;left:6px;width:13px;height:13px;
+    filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+`;
+
+// ── useTweaks ───────────────────────────────────────────────────────────────
+// Single source of truth for tweak values. setTweak persists via the host
+// (__edit_mode_set_keys → host rewrites the EDITMODE block on disk).
+function useTweaks(defaults) {
+  const [values, setValues] = React.useState(defaults);
+  // Accepts either setTweak('key', value) or setTweak({ key: value, ... }) so a
+  // useState-style call doesn't write a "[object Object]" key into the persisted
+  // JSON block.
+  const setTweak = React.useCallback((keyOrEdits, val) => {
+    const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null
+      ? keyOrEdits : { [keyOrEdits]: val };
+    setValues((prev) => ({ ...prev, ...edits }));
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+    // Same-window signal so in-page listeners (deck-stage rail thumbnails)
+    // can react — the parent message only reaches the host, not peers.
+    window.dispatchEvent(new CustomEvent('tweakchange', { detail: edits }));
+  }, []);
+  return [values, setTweak];
+}
+
+// ── TweaksPanel ─────────────────────────────────────────────────────────────
+// Floating shell. Registers the protocol listener BEFORE announcing
+// availability — if the announce ran first, the host's activate could land
+// before our handler exists and the toolbar toggle would silently no-op.
+// The close button posts __edit_mode_dismissed so the host's toolbar toggle
+// flips off in lockstep; the host echoes __deactivate_edit_mode back which
+// is what actually hides the panel.
+function TweaksPanel({ title = 'Tweaks', noDeckControls = false, children }) {
+  const [open, setOpen] = React.useState(false);
+  const dragRef = React.useRef(null);
+  // Auto-inject a rail toggle when a <deck-stage> is on the page. The
+  // toggle drives the deck's per-viewer _railVisible via window message;
+  // state is mirrored from the same localStorage key the deck reads so
+  // the control reflects reality across reloads. The mechanism is the
+  // message — authors who want custom placement can post it directly
+  // and pass noDeckControls to suppress this one.
+  const hasDeckStage = React.useMemo(
+    () => typeof document !== 'undefined' && !!document.querySelector('deck-stage'),
+    [],
+  );
+  // deck-stage enables its rail in connectedCallback, but this panel can
+  // mount before that element has upgraded. The initial read catches the
+  // common case; the listener covers mounting first. (Older deck-stage.js
+  // copies still wait for the host's __omelette_rail_enabled postMessage —
+  // same listener handles those.)
+  const [railEnabled, setRailEnabled] = React.useState(
+    () => hasDeckStage && !!document.querySelector('deck-stage')?._railEnabled,
+  );
+  React.useEffect(() => {
+    if (!hasDeckStage || railEnabled) return undefined;
+    const onMsg = (e) => {
+      if (e.data && e.data.type === '__omelette_rail_enabled') setRailEnabled(true);
+    };
+    window.addEventListener('message', onMsg);
+    return () => window.removeEventListener('message', onMsg);
+  }, [hasDeckStage, railEnabled]);
+  const [railVisible, setRailVisible] = React.useState(() => {
+    try { return localStorage.getItem('deck-stage.railVisible') !== '0'; } catch (e) { return true; }
+  });
+  const toggleRail = (on) => {
+    setRailVisible(on);
+    window.postMessage({ type: '__deck_rail_visible', on }, '*');
+  };
+  const offsetRef = React.useRef({ x: 16, y: 16 });
+  const PAD = 16;
+
+  const clampToViewport = React.useCallback(() => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const w = panel.offsetWidth, h = panel.offsetHeight;
+    const maxRight = Math.max(PAD, window.innerWidth - w - PAD);
+    const maxBottom = Math.max(PAD, window.innerHeight - h - PAD);
+    offsetRef.current = {
+      x: Math.min(maxRight, Math.max(PAD, offsetRef.current.x)),
+      y: Math.min(maxBottom, Math.max(PAD, offsetRef.current.y)),
+    };
+    panel.style.right = offsetRef.current.x + 'px';
+    panel.style.bottom = offsetRef.current.y + 'px';
+  }, []);
+
+  React.useEffect(() => {
+    if (!open) return;
+    clampToViewport();
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', clampToViewport);
+      return () => window.removeEventListener('resize', clampToViewport);
+    }
+    const ro = new ResizeObserver(clampToViewport);
+    ro.observe(document.documentElement);
+    return () => ro.disconnect();
+  }, [open, clampToViewport]);
+
+  React.useEffect(() => {
+    const onMsg = (e) => {
+      const t = e?.data?.type;
+      if (t === '__activate_edit_mode') setOpen(true);
+      else if (t === '__deactivate_edit_mode') setOpen(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  const dismiss = () => {
+    setOpen(false);
+    window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
+  };
+
+  const onDragStart = (e) => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const r = panel.getBoundingClientRect();
+    const sx = e.clientX, sy = e.clientY;
+    const startRight = window.innerWidth - r.right;
+    const startBottom = window.innerHeight - r.bottom;
+    const move = (ev) => {
+      offsetRef.current = {
+        x: startRight - (ev.clientX - sx),
+        y: startBottom - (ev.clientY - sy),
+      };
+      clampToViewport();
+    };
+    const up = () => {
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseup', up);
+    };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+  };
+
+  if (!open) return null;
+  return (
+    <>
+      <style>{__TWEAKS_STYLE}</style>
+      <div ref={dragRef} className="twk-panel" data-noncommentable=""
+           style={{ right: offsetRef.current.x, bottom: offsetRef.current.y }}>
+        <div className="twk-hd" onMouseDown={onDragStart}>
+          <b>{title}</b>
+          <button className="twk-x" aria-label="Close tweaks"
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onClick={dismiss}>✕</button>
+        </div>
+        <div className="twk-body">
+          {children}
+          {hasDeckStage && railEnabled && !noDeckControls && (
+            <TweakSection label="Deck">
+              <TweakToggle label="Thumbnail rail" value={railVisible} onChange={toggleRail} />
+            </TweakSection>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ── Layout helpers ──────────────────────────────────────────────────────────
+
+function TweakSection({ label, children }) {
+  return (
+    <>
+      <div className="twk-sect">{label}</div>
+      {children}
+    </>
+  );
+}
+
+function TweakRow({ label, value, children, inline = false }) {
+  return (
+    <div className={inline ? 'twk-row twk-row-h' : 'twk-row'}>
+      <div className="twk-lbl">
+        <span>{label}</span>
+        {value != null && <span className="twk-val">{value}</span>}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+// ── Controls ────────────────────────────────────────────────────────────────
+
+function TweakSlider({ label, value, min = 0, max = 100, step = 1, unit = '', onChange }) {
+  return (
+    <TweakRow label={label} value={`${value}${unit}`}>
+      <input type="range" className="twk-slider" min={min} max={max} step={step}
+             value={value} onChange={(e) => onChange(Number(e.target.value))} />
+    </TweakRow>
+  );
+}
+
+function TweakToggle({ label, value, onChange }) {
+  return (
+    <div className="twk-row twk-row-h">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <button type="button" className="twk-toggle" data-on={value ? '1' : '0'}
+              role="switch" aria-checked={!!value}
+              onClick={() => onChange(!value)}><i /></button>
+    </div>
+  );
+}
+
+function TweakRadio({ label, value, options, onChange }) {
+  const trackRef = React.useRef(null);
+  const [dragging, setDragging] = React.useState(false);
+  // The active value is read by pointer-move handlers attached for the lifetime
+  // of a drag — ref it so a stale closure doesn't fire onChange for every move.
+  const valueRef = React.useRef(value);
+  valueRef.current = value;
+
+  // Segments wrap mid-word once per-segment width runs out. The track is
+  // ~248px (280 panel − 28 body pad − 4 seg pad), each button loses 12px
+  // to its own padding, and 11.5px system-ui averages ~6.3px/char — so 2
+  // options fit ~16 chars each, 3 fit ~10. Past that (or >3 options), fall
+  // back to a dropdown rather than wrap.
+  const labelLen = (o) => String(typeof o === 'object' ? o.label : o).length;
+  const maxLen = options.reduce((m, o) => Math.max(m, labelLen(o)), 0);
+  const fitsAsSegments = maxLen <= ({ 2: 16, 3: 10 }[options.length] ?? 0);
+  if (!fitsAsSegments) {
+    // <select> emits strings — map back to the original option value so the
+    // fallback stays type-preserving (numbers, booleans) like the segment path.
+    const resolve = (s) => {
+      const m = options.find((o) => String(typeof o === 'object' ? o.value : o) === s);
+      return m === undefined ? s : typeof m === 'object' ? m.value : m;
+    };
+    return <TweakSelect label={label} value={value} options={options}
+                        onChange={(s) => onChange(resolve(s))} />;
+  }
+  const opts = options.map((o) => (typeof o === 'object' ? o : { value: o, label: o }));
+  const idx = Math.max(0, opts.findIndex((o) => o.value === value));
+  const n = opts.length;
+
+  const segAt = (clientX) => {
+    const r = trackRef.current.getBoundingClientRect();
+    const inner = r.width - 4;
+    const i = Math.floor(((clientX - r.left - 2) / inner) * n);
+    return opts[Math.max(0, Math.min(n - 1, i))].value;
+  };
+
+  const onPointerDown = (e) => {
+    setDragging(true);
+    const v0 = segAt(e.clientX);
+    if (v0 !== valueRef.current) onChange(v0);
+    const move = (ev) => {
+      if (!trackRef.current) return;
+      const v = segAt(ev.clientX);
+      if (v !== valueRef.current) onChange(v);
+    };
+    const up = () => {
+      setDragging(false);
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+
+  return (
+    <TweakRow label={label}>
+      <div ref={trackRef} role="radiogroup" onPointerDown={onPointerDown}
+           className={dragging ? 'twk-seg dragging' : 'twk-seg'}>
+        <div className="twk-seg-thumb"
+             style={{ left: `calc(2px + ${idx} * (100% - 4px) / ${n})`,
+                      width: `calc((100% - 4px) / ${n})` }} />
+        {opts.map((o) => (
+          <button key={o.value} type="button" role="radio" aria-checked={o.value === value}>
+            {o.label}
+          </button>
+        ))}
+      </div>
+    </TweakRow>
+  );
+}
+
+function TweakSelect({ label, value, options, onChange }) {
+  return (
+    <TweakRow label={label}>
+      <select className="twk-field" value={value} onChange={(e) => onChange(e.target.value)}>
+        {options.map((o) => {
+          const v = typeof o === 'object' ? o.value : o;
+          const l = typeof o === 'object' ? o.label : o;
+          return <option key={v} value={v}>{l}</option>;
+        })}
+      </select>
+    </TweakRow>
+  );
+}
+
+function TweakText({ label, value, placeholder, onChange }) {
+  return (
+    <TweakRow label={label}>
+      <input className="twk-field" type="text" value={value} placeholder={placeholder}
+             onChange={(e) => onChange(e.target.value)} />
+    </TweakRow>
+  );
+}
+
+function TweakNumber({ label, value, min, max, step = 1, unit = '', onChange }) {
+  const clamp = (n) => {
+    if (min != null && n < min) return min;
+    if (max != null && n > max) return max;
+    return n;
+  };
+  const startRef = React.useRef({ x: 0, val: 0 });
+  const onScrubStart = (e) => {
+    e.preventDefault();
+    startRef.current = { x: e.clientX, val: value };
+    const decimals = (String(step).split('.')[1] || '').length;
+    const move = (ev) => {
+      const dx = ev.clientX - startRef.current.x;
+      const raw = startRef.current.val + dx * step;
+      const snapped = Math.round(raw / step) * step;
+      onChange(clamp(Number(snapped.toFixed(decimals))));
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+  return (
+    <div className="twk-num">
+      <span className="twk-num-lbl" onPointerDown={onScrubStart}>{label}</span>
+      <input type="number" value={value} min={min} max={max} step={step}
+             onChange={(e) => onChange(clamp(Number(e.target.value)))} />
+      {unit && <span className="twk-num-unit">{unit}</span>}
+    </div>
+  );
+}
+
+// Relative-luminance contrast pick — checkmarks drawn over a swatch need to
+// read on both #111 and #fafafa without per-option configuration. Hex input
+// only (#rgb / #rrggbb); named or rgb()/hsl() colors fall through to "light".
+function __twkIsLight(hex) {
+  const h = String(hex).replace('#', '');
+  const x = h.length === 3 ? h.replace(/./g, (c) => c + c) : h.padEnd(6, '0');
+  const n = parseInt(x.slice(0, 6), 16);
+  if (Number.isNaN(n)) return true;
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return r * 299 + g * 587 + b * 114 > 148000;
+}
+
+const __TwkCheck = ({ light }) => (
+  <svg viewBox="0 0 14 14" aria-hidden="true">
+    <path d="M3 7.2 5.8 10 11 4.2" fill="none" strokeWidth="2.2"
+          strokeLinecap="round" strokeLinejoin="round"
+          stroke={light ? 'rgba(0,0,0,.78)' : '#fff'} />
+  </svg>
+);
+
+// TweakColor — curated color/palette picker. Each option is either a single
+// hex string or an array of 1-5 hex strings; the card adapts — a lone color
+// renders solid, a palette renders colors[0] as the hero (left ~2/3) with the
+// rest stacked in a sharp column on the right. onChange emits the
+// option in the shape it was passed (string stays string, array stays array).
+// Without options it falls back to the native color input for back-compat.
+function TweakColor({ label, value, options, onChange }) {
+  if (!options || !options.length) {
+    return (
+      <div className="twk-row twk-row-h">
+        <div className="twk-lbl"><span>{label}</span></div>
+        <input type="color" className="twk-swatch" value={value}
+               onChange={(e) => onChange(e.target.value)} />
+      </div>
+    );
+  }
+  // Native <input type=color> emits lowercase hex per the HTML spec, so
+  // compare case-insensitively. String() guards JSON.stringify(undefined),
+  // which returns the primitive undefined (no .toLowerCase).
+  const key = (o) => String(JSON.stringify(o)).toLowerCase();
+  const cur = key(value);
+  return (
+    <TweakRow label={label}>
+      <div className="twk-chips" role="radiogroup">
+        {options.map((o, i) => {
+          const colors = Array.isArray(o) ? o : [o];
+          const [hero, ...rest] = colors;
+          const sup = rest.slice(0, 4);
+          const on = key(o) === cur;
+          return (
+            <button key={i} type="button" className="twk-chip" role="radio"
+                    aria-checked={on} data-on={on ? '1' : '0'}
+                    aria-label={colors.join(', ')} title={colors.join(' · ')}
+                    style={{ background: hero }}
+                    onClick={() => onChange(o)}>
+              {sup.length > 0 && (
+                <span>
+                  {sup.map((c, j) => <i key={j} style={{ background: c }} />)}
+                </span>
+              )}
+              {on && <__TwkCheck light={__twkIsLight(hero)} />}
+            </button>
+          );
+        })}
+      </div>
+    </TweakRow>
+  );
+}
+
+function TweakButton({ label, onClick, secondary = false }) {
+  return (
+    <button type="button" className={secondary ? 'twk-btn secondary' : 'twk-btn'}
+            onClick={onClick}>{label}</button>
+  );
+}
+
+Object.assign(window, {
+  useTweaks, TweaksPanel, TweakSection, TweakRow,
+  TweakSlider, TweakToggle, TweakRadio, TweakSelect,
+  TweakText, TweakNumber, TweakColor, TweakButton,
+});
+
+  </script>
+
+  <script type="text/babel" data-presets="react">
+/* =========================================================================
+   COMPONENTS — icons, header, chips, filter bar, bottom sheet, score circle...
+   ========================================================================= */
+/* eslint-disable */
+/* Prospex BI — Shared icons & primitives */
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+
+/* ============================================================
+   Icons — minimal lucide-style SVGs
+   ============================================================ */
+const ico = (path, opts = {}) => ({ size = 18, stroke = 2, ...p } = {}) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" strokeWidth={stroke} strokeLinecap="round"
+       strokeLinejoin="round" {...p}>
+    {path}
+  </svg>
+);
+
+const Icon = {
+  arrowLeft: ico(<><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></>),
+  chevronRight: ico(<path d="M9 6l6 6-6 6"/>),
+  chevronDown: ico(<path d="M6 9l6 6 6-6"/>),
+  search: ico(<><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></>),
+  x: ico(<><path d="M18 6L6 18"/><path d="M6 6l12 12"/></>),
+  sun: ico(<><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></>),
+  moon: ico(<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>),
+  logout: ico(<><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></>),
+  bell: ico(<><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 003.4 0"/></>),
+  alertTriangle: ico(<><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></>),
+  history: ico(<><path d="M3 12a9 9 0 109-9 9.74 9.74 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></>),
+  briefcase: ico(<><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></>),
+  target: ico(<><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></>),
+  map: ico(<><path d="M1 6v15l7-3 8 3 7-3V3l-7 3-8-3-7 3z"/><line x1="8" y1="3" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="21"/></>),
+  trendUp: ico(<><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></>),
+  clipboard: ico(<><rect x="8" y="3" width="8" height="4" rx="1"/><path d="M16 5h2a2 2 0 012 2v13a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h2"/></>),
+  check: ico(<polyline points="20 6 9 17 4 12"/>),
+  phone: ico(<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.961.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.849.573 2.81.7A2 2 0 0122 16.92z"/>),
+  clock: ico(<><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></>),
+  pin: ico(<><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></>),
+  star: ico(<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>),
+  dollar: ico(<><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></>),
+  send: ico(<><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></>),
+  plus: ico(<><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></>),
+  trash: ico(<><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></>),
+  sparkles: ico(<><path d="M12 3l1.9 5.7L20 10l-5.7 1.9L12 18l-1.9-5.7L4.4 10l5.7-1.3z"/><path d="M5 3v4M3 5h4M19 17v4M17 19h4"/></>),
+  thumbsUp: ico(<path d="M7 10v12M15 5.88L14 10h5.83a2 2 0 011.92 2.56l-2.33 8A2 2 0 0117.5 22H7V10l5-9a3 3 0 013 3v1.88z"/>),
+  thumbsDown: ico(<path d="M17 14V2M9 18.12L10 14H4.17a2 2 0 01-1.92-2.56l2.33-8A2 2 0 016.5 2H17v12l-5 9a3 3 0 01-3-3v-1.88z"/>),
+  meh: ico(<><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></>),
+  refresh: ico(<><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></>),
+  external: ico(<><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></>),
+  filter: ico(<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>),
+  mail: ico(<><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></>),
+  lock: ico(<><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></>),
+  eye: ico(<><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></>),
+  arrowRight: ico(<><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></>),
+  fileText: ico(<><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></>),
+  trendDown: ico(<><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></>),
+};
+
+/* ============================================================
+   Score circle
+   ============================================================ */
+function Score({ value, max = 10, size = 64 }) {
+  const r = size/2 - 5;
+  const c = 2 * Math.PI * r;
+  const pct = Math.max(0, Math.min(1, value/max));
+  const offset = c * (1 - pct);
+  return (
+    <div className="score" style={{ width: size, height: size }}>
+      <svg viewBox={`0 0 ${size} ${size}`}>
+        <circle className="track" cx={size/2} cy={size/2} r={r} fill="none" strokeWidth="5"/>
+        <circle className="fill" cx={size/2} cy={size/2} r={r} fill="none"
+                strokeWidth="5" strokeLinecap="round"
+                strokeDasharray={c} strokeDashoffset={offset}/>
+      </svg>
+      <div className="label">{value}<em>/{max}</em></div>
+    </div>
+  );
+}
+
+/* ============================================================
+   Logo
+   ============================================================ */
+function Logo({ size = 'm' }) {
+  return (
+    <span className={`logo ${size}`}>
+      <span className="glyph">p</span>
+    </span>
+  );
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+function Header({ user, onBack, onToggleTheme, theme, onLogout, subtitle }) {
+  return (
+    <header className="header">
+      {onBack ? (
+        <button className="header-back" onClick={onBack} aria-label="Voltar">
+          <Icon.arrowLeft size={18}/>
+        </button>
+      ) : (
+        <Logo size="s"/>
+      )}
+      <div className="header-brand">
+        <div className="header-title">
+          <span className="name">Prospex <em>BI</em></span>
+          {subtitle && <span className="sub">{subtitle}</span>}
+        </div>
+      </div>
+      <div className="header-actions">
+        <button className="icon-btn" onClick={onToggleTheme} aria-label="Alternar tema">
+          {theme === 'dark' ? <Icon.sun size={17}/> : <Icon.moon size={17}/>}
+        </button>
+        {user && <div className="avatar" title={user.name}>{user.initials}</div>}
+        {onLogout && (
+          <button className="icon-btn" onClick={onLogout} aria-label="Sair">
+            <Icon.logout size={17}/>
+          </button>
+        )}
+      </div>
+    </header>
+  );
+}
+
+/* ============================================================
+   Chip filter
+   ============================================================ */
+function Chip({ active, onClick, children, removable }) {
+  return (
+    <button className={`chip ${active ? 'is-active' : ''}`} onClick={onClick}>
+      {children}
+      {active && removable && <Icon.x size={12} className="chip-x"/>}
+    </button>
+  );
+}
+
+/* ============================================================
+   Search input
+   ============================================================ */
+function SearchInput({ value, onChange, placeholder = 'Buscar...' }) {
+  return (
+    <div className="input-icon">
+      <Icon.search size={16}/>
+      <input className="input" value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}/>
+    </div>
+  );
+}
+
+/* ============================================================
+   Avatar with initial (tone derived from name)
+   ============================================================ */
+function AvatarInit({ name, sm }) {
+  const tone = useMemo(() => {
+    let h = 0;
+    for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+    return (h % 6) + 1;
+  }, [name]);
+  const init = useMemo(() => {
+    const parts = name.split(' ').filter(Boolean);
+    if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+    return name.slice(0, 2).toUpperCase();
+  }, [name]);
+  return <div className={`avatar-init ${sm ? 'sm' : ''} tone-${tone}`}>{init}</div>;
+}
+
+/* ============================================================
+   Progress bar
+   ============================================================ */
+function Progress({ value, max = 100, tone }) {
+  const pct = Math.max(0, Math.min(100, (value/max)*100));
+  return (
+    <div className={`progress ${tone || ''}`}>
+      <div className="bar" style={{ width: `${pct}%` }}/>
+    </div>
+  );
+}
+
+/* ============================================================
+   AI spinner with rotating phrases
+   ============================================================ */
+function AISpinner({ phrases = ['Pensando...', 'Analisando dados...', 'Cruzando histórico...', 'Refinando...'] }) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setI(x => (x + 1) % phrases.length), 1200);
+    return () => clearInterval(t);
+  }, [phrases.length]);
+  return (
+    <div className="spinner-block">
+      <div className="spinner"/>
+      <div className="spinner-text">{phrases[i]}</div>
+    </div>
+  );
+}
+
+/* ============================================================
+   FilterBar — compact row + bottom sheet for filtering
+   ============================================================ */
+function FilterBar({ filters, values, onChange, sticky = true }) {
+  const activeCount = filters.reduce((s, f) => s + (values[f.key] ? 1 : 0), 0);
+
+  function clearAll() {
+    filters.forEach(f => onChange(f.key, null));
+  }
+
+  // versão select inline — compacta e prática no mobile
+  return (
+    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12, alignItems: 'center' }}>
+      {filters.map(f => (
+        <select
+          key={f.key}
+          className="select"
+          value={values[f.key] || ''}
+          onChange={e => onChange(f.key, e.target.value || null)}
+          style={{ flex: 1, minWidth: 100, fontSize: 13, padding: '8px 10px' }}
+        >
+          <option value="">{f.label}</option>
+          {(f.options || []).map(o => {
+            const val = typeof o === 'object' ? o.value : o;
+            const lbl = typeof o === 'object' ? o.label : o;
+            return <option key={val} value={val}>{lbl}</option>;
+          })}
+        </select>
+      ))}
+      {activeCount > 0 && (
+        <button className="btn btn-ghost btn-sm" onClick={clearAll} style={{ whiteSpace: 'nowrap', fontSize: 12 }}>
+          <Icon.x size={12}/> Limpar
+        </button>
+      )}
+    </div>
+  );
+
+  // versão legada não usada
+  function labelOf(filter) {
+    const v = values[filter.key];
+    if (!v) return null;
+    const opt = (filter.options || []).find(o => (typeof o === 'object' ? o.value : o) === v);
+    return opt ? (typeof opt === 'object' ? opt.label : opt) : v;
+  }
+
+  return (
+    <>
+      <div className={`filter-bar ${sticky ? 'is-sticky' : ''}`}>
+        <button className={`filter-trigger ${activeCount > 0 ? 'has-active' : ''}`} onClick={() => setOpen(true)}>
+          <Icon.filter size={13}/>
+          <span>Filtros</span>
+          {activeCount > 0 && <span className="filter-count">{activeCount}</span>}
+        </button>
+        <div className="filter-chips">
+          {filters.map(f => {
+            const lbl = labelOf(f);
+            if (!lbl) return null;
+            return (
+              <button key={f.key} className="chip is-active" onClick={() => onChange(f.key, null)}>
+                <span style={{ opacity: 0.7, fontWeight: 500, fontSize: 11 }}>{f.label}:</span> {lbl}
+                <Icon.x size={11} className="chip-x"/>
+              </button>
+            );
+          })}
+        </div>
+        {activeCount > 0 && (
+          <button className="filter-clear" onClick={clearAll}>Limpar</button>
+        )}
+      </div>
+
+      <BottomSheet open={open} onClose={() => setOpen(false)} title="Filtros">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+          {filters.map(f => (
+            <div key={f.key}>
+              <div className="eyebrow" style={{ marginBottom: 8 }}>{f.label}</div>
+              <div className="chip-row">
+                {(f.options || []).map(o => {
+                  const val = typeof o === 'object' ? o.value : o;
+                  const lbl = typeof o === 'object' ? o.label : o;
+                  const active = values[f.key] === val;
+                  return (
+                    <Chip key={val} active={active} onClick={() => onChange(f.key, active ? null : val)} removable>
+                      {lbl}
+                    </Chip>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+          <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
+            <button className="btn btn-ghost btn-block btn-sm" onClick={() => { clearAll(); }}>Limpar tudo</button>
+            <button className="btn btn-primary btn-block btn-sm" onClick={() => setOpen(false)}>Aplicar{activeCount > 0 ? ` (${activeCount})` : ''}</button>
+          </div>
+        </div>
+      </BottomSheet>
+    </>
+  );
+}
+
+/* ============================================================
+   BottomSheet — slides up from bottom of device
+   ============================================================ */
+function BottomSheet({ open, onClose, title, children }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    if (open) {
+      setMounted(true);
+    } else {
+      const t = setTimeout(() => setMounted(false), 240);
+      return () => clearTimeout(t);
+    }
+  }, [open]);
+
+  if (!mounted && !open) return null;
+
+  return (
+    <div className={`sheet-overlay ${open ? 'is-open' : ''}`} onClick={onClose}>
+      <div className="sheet" onClick={e => e.stopPropagation()}>
+        <div className="sheet-grab"/>
+        <div className="sheet-head">
+          <h3 className="h3">{title}</h3>
+          <button className="icon-btn" onClick={onClose} aria-label="Fechar"><Icon.x size={16}/></button>
+        </div>
+        <div className="sheet-body">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   Currency formatter
+   ============================================================ */
+function brl(n, opts = {}) {
+  const { compact, noSymbol } = opts;
+  if (compact && n >= 1000) {
+    const k = n / 1000;
+    return `${noSymbol ? '' : 'R$ '}${k.toFixed(k >= 100 ? 0 : 1).replace('.', ',')}k`;
+  }
+  return (noSymbol ? '' : 'R$ ') + n.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+
+/* ============================================================
+   Export to window so screens.jsx can use these
+   ============================================================ */
+Object.assign(window, {
+  Icon, Score, Logo, Header, Chip, SearchInput, AvatarInit, Progress, AISpinner, brl,
+  FilterBar, BottomSheet,
+});
+
+  </script>
+
+  <script type="text/babel" data-presets="react">
+/* =========================================================================
+   DATA — mock clients, prospects, visits
+   ========================================================================= */
+/* eslint-disable */
+/* Prospex BI — Mock data */
+
+const MOCK_USER = { name: 'Carlos Silva', initials: 'CS', company: 'Empresa Teste · Representante de Campo' };
+
+const CITIES = ['Campinas', 'Sorocaba', 'Jundií', 'Ribeirão Preto', 'Piracicaba', 'São José dos Campos', 'Piraçúnunga', 'Limeira'];
+const SEGMENTS = ['Restaurante', 'Churrascaria', 'Açougue', 'Supermercado', 'Pizzaria', 'Bar', 'Empório'];
+
+const CLIENTS = [
+  { id: 'c1', name: 'Churrascaria Espéto de Ouro', city: 'Campinas', segment: 'Churrascaria', status: 'active', revenue: 48600, revenueYTD: 218700, volumeYTD: 4374, phone: '(19) 99821-4477', hours: 'Seg-Sab · 11h-23h', email: 'contato@espetodeouro.com.br', cuts: ['Picanha', 'Maminha', 'Fraldinha', 'Cupim', 'Costela'], lastVisitDays: 12 },
+  { id: 'c2', name: 'Mercado Central Vila Nova', city: 'Sorocaba', segment: 'Supermercado', status: 'active', revenue: 92400, revenueYTD: 415800, volumeYTD: 8316, phone: '(15) 99654-1102', hours: 'Seg-Dom · 7h-22h', email: 'compras@mercadocentral.com.br', cuts: ['Patinho moído', 'Acém', 'Coxão duro', 'Linguiça'], lastVisitDays: 5 },
+  { id: 'c3', name: 'Restaurante Mamãe Lurdes', city: 'Jundií', segment: 'Restaurante', status: 'active', revenue: 22100, revenueYTD: 99450, volumeYTD: 1989, phone: '(11) 4521-8870', hours: 'Seg-Sex · 11h-15h', email: 'lurdes@restaurantelurdes.com.br', cuts: ['Coxão mole', 'Acém', 'Músculo'], lastVisitDays: 38 },
+  { id: 'c4', name: 'Empório das Carnes Bonfim', city: 'Ribeirão Preto', segment: 'Empório', status: 'active', revenue: 63800, revenueYTD: 287100, volumeYTD: 5742, phone: '(16) 99432-5567', hours: 'Seg-Sab · 8h-20h', email: 'compras@emporiobonfim.com.br', cuts: ['Picanha', 'Ancho', 'Bife de chorizo'], lastVisitDays: 9 },
+  { id: 'c5', name: 'Pizzaria Bella Napoli', city: 'Piracicaba', segment: 'Pizzaria', status: 'inactive', revenue: 0, potential: 28000, score: 4.1, phone: '(19) 3422-7716', hours: 'Ter-Dom · 18h-23h', cuts: ['Bacon', 'Pernil'], lastVisitDays: 64 },
+  { id: 'c6', name: 'Açougue do Zé Carlos', city: 'Campinas', segment: 'Açougue', status: 'active', revenue: 31200, potential: 52000, score: 7.0, phone: '(19) 98876-3321', hours: 'Seg-Sab · 6h-19h', cuts: ['Variados'], lastVisitDays: 18 },
+  { id: 'c7', name: 'Boteco do Tinão', city: 'São José dos Campos', segment: 'Bar', status: 'active', revenue: 14800, potential: 24000, score: 5.8, phone: '(12) 99765-4488', hours: 'Qua-Dom · 17h-1h', cuts: ['Picanha mini', 'Linguiça'], lastVisitDays: 22 },
+  { id: 'c8', name: 'Restaurante Sabor Mineiro', city: 'Limeira', segment: 'Restaurante', status: 'active', revenue: 38900, potential: 55000, score: 7.2, phone: '(19) 99221-6677', hours: 'Seg-Sex · 11h-22h', cuts: ['Costela', 'Cupim', 'Coxão duro'], lastVisitDays: 45 },
+];
+
+const PROSPECTS = [
+  { id: 'p1', name: 'Casa de Carnes Premium', city: 'Campinas', type: 'Açougue Boutique', segment: 'Açougue', google: 4.7, complaints: 2, isNew: true, cnpjStatus: 'Ativo', abertura: '2019', instagram: true, news: null },
+  { id: 'p2', name: 'Restaurante Vinheria', city: 'Jundií', type: 'Restaurante Italiano', segment: 'Restaurante', google: 4.5, complaints: 5, isNew: false, cnpjStatus: 'Ativo', abertura: '2015', instagram: true, news: 'Mencionado no Guia Veja SP 2025' },
+  { id: 'p3', name: 'Churrascaria Pampa Sul', city: 'Sorocaba', type: 'Churrascaria Tradicional', segment: 'Churrascaria', google: 4.8, complaints: 1, isNew: true, cnpjStatus: 'Ativo', abertura: '2021', instagram: false, news: null },
+  { id: 'p4', name: 'Hipermercado SuperBom', city: 'Ribeirão Preto', type: 'Rede regional', segment: 'Supermercado', google: 4.3, complaints: 12, isNew: false, cnpjStatus: 'Ativo', abertura: '2008', instagram: true, news: 'Inaugurou 2ª unidade em março/2026' },
+  { id: 'p5', name: 'Bar do Português', city: 'Piracicaba', type: 'Bar com cozinha', segment: 'Bar', google: 4.2, complaints: 3, isNew: true, cnpjStatus: 'Ativo', abertura: '2022', instagram: false, news: null },
+  { id: 'p6', name: 'Pizzaria Forno de Pedra', city: 'Limeira', type: 'Pizzaria Premium', segment: 'Pizzaria', google: 4.6, complaints: 2, isNew: false, cnpjStatus: 'Ativo', abertura: '2017', instagram: true, news: null },
+];
+
+const PENDING_VISITS = [
+  { clientId: 'c3', name: 'Restaurante Mamãe Lurdes', city: 'Jundií', days: 38, reason: 'Aguarda orçamento' },
+  { clientId: 'c8', name: 'Restaurante Sabor Mineiro', city: 'Limeira', days: 45, reason: 'Renegociar prazo' },
+];
+
+const NO_VISIT = [
+  { clientId: 'c5', name: 'Pizzaria Bella Napoli', city: 'Piracicaba', days: 64 },
+  { clientId: 'c8', name: 'Restaurante Sabor Mineiro', city: 'Limeira', days: 45 },
+];
+
+const LAST_VISITS = [
+  { id: 'v1', clientId: 'c4', name: 'Empório das Carnes Bonfim', result: 'Pedido fechado', date: '13/05', value: 8400, kind: 'positive', pendingReturn: false },
+  { id: 'v2', clientId: 'c1', name: 'Churrascaria Espéto de Ouro', result: 'Pedido fechado', date: '12/05', value: 12200, kind: 'positive', pendingReturn: false },
+  { id: 'v3', clientId: 'c3', name: 'Restaurante Mamãe Lurdes', result: 'Aguarda orçamento', date: '10/05', kind: 'pending', pendingReturn: true },
+  { id: 'v4', clientId: 'c5', name: 'Pizzaria Bella Napoli', result: 'Sem interesse no momento', date: '08/05', kind: 'negative', pendingReturn: false },
+  { id: 'v5', clientId: 'c8', name: 'Restaurante Sabor Mineiro', result: 'Renegociar prazo', date: '06/05', kind: 'pending', pendingReturn: true },
+];
+
+const CONVERTED = [
+  { id: 'cv1', name: 'Açougue do Zé Carlos', share: 12, value: 31200 },
+  { id: 'cv2', name: 'Boteco do Tinão', share: 5, value: 14800 },
+];
+
+Object.assign(window, { MOCK_USER, CITIES, SEGMENTS, CLIENTS, PROSPECTS, PENDING_VISITS, NO_VISIT, LAST_VISITS, CONVERTED });
+
+  </script>
+
+  <script type="text/babel" data-presets="react">
+/* =========================================================================
+   SCREENS 1-4 — Login, Home, Diagnóstico (lista + detalhe)
+   ========================================================================= */
+/* eslint-disable */
+/* Prospex BI — Login, Home, Diagnóstico (list + detail) */
+
+/* ============================================================
+   Screen 1 — Login
+   ============================================================ */
+function LoginScreen({ onLogin, theme, onToggleTheme }) {
+  const [email, setEmail] = useState('carlos@prospex.bi');
+  const [pwd, setPwd] = useState('••••••••');
+  const [loading, setLoading] = useState(false);
+
+  function submit(e) {
+    e && e.preventDefault();
+    setLoading(true);
+    setTimeout(() => { setLoading(false); onLogin(); }, 600);
+  }
+
+  return (
+    <div className="screen screen-enter" data-screen-label="01 Login">
+      <header className="header" style={{ borderBottom: 'none', background: 'transparent' }}>
+        <div className="flex-1"></div>
+        <button className="icon-btn" onClick={onToggleTheme} aria-label="Tema">
+          {theme === 'dark' ? <Icon.sun size={17}/> : <Icon.moon size={17}/>}
+        </button>
+      </header>
+
+      <div className="screen-pad" style={{ paddingTop: 24, display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <div style={{ textAlign: 'center', marginBottom: 28 }}>
+          <Logo size="l"/>
+        </div>
+
+        <h1 className="h1" style={{ textAlign: 'center', maxWidth: 320, margin: '0 auto' }}>
+          Seu app de <em>campo.</em>
+        </h1>
+        <p className="lede" style={{ textAlign: 'center', maxWidth: 300, margin: '10px auto 0' }}>
+          Exclusivo para representantes comerciais. Faça login para acessar sua carteira.
+        </p>
+
+        <form onSubmit={submit} className="card mt-5" style={{ marginTop: 32 }}>
+          <div className="field mb-3">
+            <label className="field-label">E-mail</label>
+            <div className="input-icon">
+              <Icon.mail size={16}/>
+              <input className="input" type="email" value={email} onChange={e=>setEmail(e.target.value)}/>
+            </div>
+          </div>
+          <div className="field">
+            <label className="field-label">Senha</label>
+            <div className="input-icon">
+              <Icon.lock size={16}/>
+              <input className="input" type="password" value={pwd} onChange={e=>setPwd(e.target.value)}/>
+            </div>
+          </div>
+          <button type="submit" className="btn btn-primary btn-block mt-3" disabled={loading}>
+            {loading ? <><span className="spinner" style={{ width: 14, height: 14, borderWidth: 2 }}/> Entrando...</> : <>Entrar <Icon.arrowRight size={16}/></>}
+          </button>
+          <div style={{ textAlign: 'center', marginTop: 12 }}>
+            <a className="txt-13 txt-muted" href="#" onClick={e=>e.preventDefault()}>Esqueci minha senha</a>
+          </div>
+        </form>
+
+        <div className="flex-1"></div>
+        <p className="txt-12 txt-muted" style={{ textAlign: 'center', marginTop: 24 }}>
+          <span className="italic-serif" style={{ fontSize: 14 }}>Prospex BI</span> · App do Representante Comercial
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   Screen 2 — Home
+   ============================================================ */
+function HomeScreen({ go, user, theme, onToggleTheme, onLogout }) {
+  const [showDanger, setShowDanger] = useState(true);
+  const [showWarn, setShowWarn] = useState(true);
+  const [dismissedNoVisit, setDismissedNoVisit] = useState([]);
+  const [dismissedPending, setDismissedPending] = useState([]);
+  const visibleNoVisit = NO_VISIT.filter(v => !dismissedNoVisit.includes(v.clientId));
+  const visiblePending = PENDING_VISITS.filter(v => !dismissedPending.includes(v.clientId));
+
+  const greeting = useMemo(() => {
+    const h = new Date().getHours();
+    if (h < 12) return 'Bom dia';
+    if (h < 18) return 'Boa tarde';
+    return 'Boa noite';
+  }, []);
+
+  return (
+    <div className="screen screen-enter" data-screen-label="02 Home">
+      <Header user={user} theme={theme} onToggleTheme={onToggleTheme} onLogout={onLogout}/>
+
+      <div className="screen-pad" style={{ paddingTop: 18 }}>
+        <div className="eyebrow fade-in">{user.company}</div>
+        <h1 className="h1 mt-1 fade-in">
+          {greeting}, <em>{user.name.split(' ')[0]}!</em>
+        </h1>
+        <p className="lede fade-in-delay-1">Você tem <strong style={{color:'var(--ink)'}}>2 alertas</strong> e <strong style={{color:'var(--ink)'}}>4 visitas</strong> sugeridas para hoje.</p>
+
+        {(showDanger && visibleNoVisit.length > 0 || showWarn && visiblePending.length > 0) && (
+          <div className="mt-4 fade-in-delay-2">
+            {showDanger && visibleNoVisit.length > 0 && (
+              <div className="alert alert-danger">
+                <div className="alert-head">
+                  <div className="ico"><Icon.alertTriangle size={16}/></div>
+                  <div className="flex-1">
+                    <div className="title">Clientes sem visita</div>
+                    <div className="sub">{visibleNoVisit.length} cliente{visibleNoVisit.length!==1?'s':''} sem visita há +7 dias</div>
+                  </div>
+                  <button className="alert-dismiss" onClick={()=>setShowDanger(false)}><Icon.x size={14}/></button>
+                </div>
+                <div className="alert-list">
+                  {visibleNoVisit.map(v => (
+                    <div key={v.clientId} className="alert-row">
+                      <AvatarInit name={v.name} sm/>
+                      <div className="name">{v.name} <span className="city">· {v.city}</span></div>
+                      <div className="counter">{v.days}<span className="txt-12 txt-muted" style={{marginLeft:2}}>d</span></div>
+                      <button className="alert-dismiss" style={{marginLeft:6}} onClick={()=>setDismissedNoVisit(d=>[...d,v.clientId])}><Icon.x size={12}/></button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {showWarn && visiblePending.length > 0 && (
+              <div className="alert alert-warn">
+                <div className="alert-head">
+                  <div className="ico"><Icon.history size={16}/></div>
+                  <div className="flex-1">
+                    <div className="title">Visitas com retorno pendente</div>
+                    <div className="sub">{visiblePending.length} retorno{visiblePending.length!==1?'s':''} a finalizar</div>
+                  </div>
+                  <button className="alert-dismiss" onClick={()=>setShowWarn(false)}><Icon.x size={14}/></button>
+                </div>
+                <div className="alert-list">
+                  {visiblePending.map(v => (
+                    <div key={v.clientId} className="alert-row">
+                      <AvatarInit name={v.name} sm/>
+                      <div className="name">{v.name}</div>
+                      <span className="badge badge-warn">{v.reason}</span>
+                      <button className="alert-dismiss" style={{marginLeft:6}} onClick={()=>setDismissedPending(d=>[...d,v.clientId])}><Icon.x size={12}/></button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        <div className="section mt-4">
+          <div className="section-title">Módulos <span className="count">5</span></div>
+          <div className="list">
+            <ModuleCard onClick={()=>go('diagnostico')} tone="t-diag" icon={<Icon.briefcase size={20}/>}
+                       title="Diagnóstico de carteira" desc="Análise dos seus clientes ativos" badge={CLIENTS.filter(c=>c.status==='active').length}/>
+            <ModuleCard onClick={()=>go('prospeccao')} tone="t-prosp" icon={<Icon.target size={20}/>}
+                       title="Prospecção" desc="Novos negócios na sua região" badge={PROSPECTS.length}/>
+            <ModuleCard onClick={()=>go('mapa')} tone="t-map" icon={<Icon.map size={20}/>}
+                       title="Mapa & Rota" desc="Visualize e planeje suas visitas"/>
+            <ModuleCard onClick={()=>go('indicadores')} tone="t-indic" icon={<Icon.trendUp size={20}/>}
+                       title="Meus indicadores" desc="Faturamento, base e conversões"/>
+            <ModuleCard onClick={()=>go('checkin')} tone="t-check" icon={<Icon.clipboard size={20}/>}
+                       title="Check-in de visita" desc="Registre uma visita realizada"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ModuleCard({ onClick, tone, icon, title, desc, badge }) {
+  return (
+    <div className="module-card" onClick={onClick}>
+      <div className={`mod-ico ${tone}`}>{icon}</div>
+      <div className="mod-text">
+        <h3 className="mod-title">{title}</h3>
+        <p className="mod-desc">{desc}</p>
+      </div>
+      <div className="mod-end">
+        {badge !== undefined && badge !== null ? (
+          <span className="badge-counter">{badge}</span>
+        ) : (
+          <Icon.chevronRight size={18}/>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   Screen 3 — Diagnóstico (lista)
+   ============================================================ */
+function DiagListScreen({ go, back, user, theme, onToggleTheme }) {
+  const [q, setQ] = useState('');
+  const [city, setCity] = useState(null);
+  const [seg, setSeg] = useState(null);
+  const [status, setStatus] = useState(null);
+
+  const filtered = CLIENTS.filter(c => {
+    if (q && !c.name.toLowerCase().includes(q.toLowerCase())) return false;
+    if (city && c.city !== city) return false;
+    if (seg && c.segment !== seg) return false;
+    if (status && c.status !== status) return false;
+    return true;
+  });
+
+  return (
+    <div className="screen screen-enter" data-screen-label="03 Diagnostico Lista">
+      <Header user={user} theme={theme} onToggleTheme={onToggleTheme} onBack={back} subtitle="Diagnóstico"/>
+      <div className="screen-pad">
+        <div className="eyebrow">Sua carteira</div>
+        <h2 className="h2 mt-1">Clientes <em className="italic-serif">ativos</em></h2>
+        <p className="lede">{filtered.length} de {CLIENTS.length} clientes</p>
+
+        <div className="mt-3"><SearchInput value={q} onChange={setQ} placeholder="Buscar cliente..."/></div>
+
+        <FilterBar
+          filters={[
+            { key: 'city',    label: 'Cidade',   options: CITIES.slice(0, 6) },
+            { key: 'segment', label: 'Segmento', options: SEGMENTS },
+            { key: 'status',  label: 'Status',   options: [{value:'active', label:'Ativos'}, {value:'inactive', label:'Inativos'}] },
+          ]}
+          values={{ city, segment: seg, status }}
+          onChange={(k, v) => { if(k==='city') setCity(v); if(k==='segment') setSeg(v); if(k==='status') setStatus(v); }}
+        />
+
+        <div className="list mt-3">
+          {filtered.map(c => (
+            <ClientRow key={c.id} client={c} onClick={()=>go('diagnostico-detalhe', { id: c.id })}/>
+          ))}
+          {filtered.length === 0 && (
+            <div className="card" style={{textAlign:'center', color:'var(--muted)', padding:'24px'}}>
+              <Icon.search size={20}/>
+              <p className="mt-2 mb-0 txt-13">Nenhum cliente encontrado</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FilterBlock({ children }) {
+  return <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 14 }}>{children}</div>;
+}
+
+function ChipScroll({ label, children }) {
+  return (
+    <div>
+      <div className="eyebrow" style={{ marginBottom: 6, fontSize: 10 }}>{label}</div>
+      <div className="chip-row">{children}</div>
+    </div>
+  );
+}
+
+function ClientRow({ client, onClick, endNode }) {
+  return (
+    <div className="client-row" onClick={onClick}>
+      <AvatarInit name={client.name}/>
+      <div className="body">
+        <div className="name">{client.name}</div>
+        <div className="sub">
+          <Icon.pin size={11}/> {client.city}
+          {client.revenue !== undefined && <><span className="dot"/> {brl(client.revenue, {compact:true})}/mês</>}
+          {client.segment && client.revenue === undefined && <><span className="dot"/> {client.segment}</>}
+        </div>
+      </div>
+      <div className="end">
+        {endNode ?? (
+          <>
+            {client.status && <span className={`badge ${client.status === 'active' ? 'badge-active' : 'badge-inactive'}`}>{client.status === 'active' ? 'Ativo' : 'Inativo'}</span>}
+            {client.segment && client.revenue === undefined && <span className="badge badge-accent">{client.segment}</span>}
+            <Icon.chevronRight size={16}/>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   Screen 4 — Diagnóstico (detalhe)
+   ============================================================ */
+function DiagDetailScreen({ id, back, user, theme, onToggleTheme }) {
+  const c = CLIENTS.find(x => x.id === id) || CLIENTS[0];
+  const [tab, setTab] = useState('analise');
+
+  return (
+    <div className="screen screen-enter" data-screen-label="04 Diagnostico Detalhe">
+      <Header user={user} theme={theme} onToggleTheme={onToggleTheme} onBack={back} subtitle="Diagnóstico"/>
+      <div className="screen-pad">
+
+        <div className="card card-dark" style={{padding:'18px'}}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="eyebrow" style={{ color: 'var(--on-inverse-muted)' }}>{c.segment}</div>
+            <h2 className="h2 mt-1" style={{ color: 'var(--on-inverse)' }}>{c.name}</h2>
+            <div className="row mt-2 gap-2 txt-13" style={{ color: 'var(--on-inverse-muted)' }}>
+              <Icon.pin size={13}/> {c.city}
+            </div>
+          </div>
+        </div>
+
+        <div className="kpi-grid mt-3">
+          <Kpi lbl="Fat. mensal" val={brl(c.revenue, {compact:true})}/>
+          <Kpi lbl="Fat. acumulado (ano)" val={c.revenueYTD ? brl(c.revenueYTD, {compact:true}) : '—'}/>
+          <Kpi lbl="Volume acum. (ano)" val={c.volumeYTD ? c.volumeYTD.toLocaleString('pt-BR')+'kg' : '—'} small/>
+          <Kpi lbl="Telefone" val={c.phone} small/>
+          <Kpi lbl="E-mail" val={c.email || '—'} small/>
+          <Kpi lbl="Horário" val={c.hours} small/>
+        </div>
+
+        <div className="mt-4 pills">
+          <button className={`pill ${tab==='analise'?'is-active':''}`} onClick={()=>setTab('analise')}>Análise</button>
+          <button className={`pill ${tab==='cortes'?'is-active':''}`} onClick={()=>setTab('cortes')}>Cortes</button>
+          <button className={`pill ${tab==='acao'?'is-active':''}`} onClick={()=>setTab('acao')}>Ação</button>
+        </div>
+
+        <div className="mt-3">
+          {tab === 'analise' && <DiagAnalise client={c}/>}
+          {tab === 'cortes' && <DiagCortes client={c}/>}
+          {tab === 'acao' && <DiagAcao client={c}/>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Kpi({ lbl, val, small }) {
+  return (
+    <div className="kpi">
+      <div className="lbl">{lbl}</div>
+      <div className={`val ${small ? 'small' : ''}`}>{val}</div>
+    </div>
+  );
+}
+
+function DiagAnalise({ client }) {
+  return (
+    <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div className="card" style={{padding:14}}>
+        <div className="row gap-2 mb-2">
+          <Icon.trendUp size={16} color="var(--positive)"/>
+          <strong className="txt-14">Oportunidades</strong>
+        </div>
+        <div className="bordered-list">
+          <div className="bordered-item positive"><strong>Crescimento de 18%</strong> no consumo de picanha nos últimos 3 meses</div>
+          <div className="bordered-item positive">Cliente <strong>top 15%</strong> em ticket médio da região</div>
+          <div className="bordered-item positive">Espaço para introduzir <strong>cortes premium</strong> (ancho, chorizo)</div>
+        </div>
+      </div>
+      <div className="card" style={{padding:14}}>
+        <div className="row gap-2 mb-2">
+          <Icon.alertTriangle size={16} color="var(--danger)"/>
+          <strong className="txt-14">Pontos de atenção</strong>
+        </div>
+        <div className="bordered-list">
+          <div className="bordered-item danger">Frequência de pedido caiu de <strong>2x/sem</strong> para <strong>1x/sem</strong></div>
+          <div className="bordered-item danger">Última reclamação sobre qualidade do <strong>cupim</strong> em abril</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DiagCortes({ client }) {
+  const recs = [
+    { name: 'Picanha Maturada', why: 'Consumo crescente +18%', volume: '40kg/sem' },
+    { name: 'Ancho', why: 'Oportunidade premium', volume: '15kg/sem' },
+    { name: 'Cupim limpo', why: 'Substituir fornecedor atual', volume: '25kg/sem' },
+    { name: 'Costela ripa', why: 'Demanda em final de semana', volume: '60kg/sem' },
+  ];
+  return (
+    <div className="card fade-in" style={{padding:14}}>
+      <div className="row gap-2 mb-2">
+        <Icon.sparkles size={16} color="var(--info)"/>
+        <strong className="txt-14">Cortes recomendados</strong>
+      </div>
+      <div className="bordered-list">
+        {recs.map((r, i) => (
+          <div key={i} className="bordered-item info">
+            <div className="row-between" style={{ alignItems: 'flex-start' }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <strong>{r.name}</strong>
+                <div className="txt-12 txt-muted mt-1">{r.why}</div>
+              </div>
+              <span className="badge badge-info">{r.volume}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DiagAcao({ client }) {
+  return (
+    <div className="card card-dark fade-in" style={{padding:16}}>
+      <div className="row gap-2 mb-2">
+        <Icon.sparkles size={16} style={{color:'var(--accent)'}}/>
+        <div className="eyebrow" style={{color:'var(--accent)'}}>Recomendação estratégica</div>
+      </div>
+      <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.55, color: 'var(--on-inverse)' }}>
+        Visite <span className="italic-serif" style={{fontSize:18}}>{client.name}</span> esta semana com amostra de
+        <strong> picanha maturada</strong> e <strong>ancho</strong>. O cliente tem espaço para subir o ticket
+        em ~<strong>R$ 23k/mês</strong> e demonstrou interesse em cortes premium.
+      </p>
+      <div className="row gap-2 mt-3" style={{ flexWrap: 'wrap' }}>
+        <span className="badge badge-accent">Prioridade alta</span>
+        <span className="badge" style={{background:'rgba(255,255,255,0.1)', color:'var(--on-inverse)'}}>Esta semana</span>
+        <span className="badge" style={{background:'rgba(255,255,255,0.1)', color:'var(--on-inverse)'}}>Levar amostras</span>
+      </div>
+      <button className="btn btn-accent btn-block mt-3"><Icon.plus size={16}/> Adicionar à rota</button>
+    </div>
+  );
+}
+
+Object.assign(window, {
+  LoginScreen, HomeScreen, DiagListScreen, DiagDetailScreen,
+  ModuleCard, ClientRow, ChipScroll, FilterBlock,
+});
+
+  </script>
+
+  <script type="text/babel" data-presets="react">
+/* =========================================================================
+   SCREENS 5-9 — Prospecção, Mapa, Indicadores, Check-in
+   ========================================================================= */
+/* eslint-disable */
+/* Prospex BI — Prospecção, Mapa, Indicadores, Check-in */
+
+/* ============================================================
+   Screen 5 — Prospecção (lista)
+   ============================================================ */
+function ProspListScreen({ go, back, user, theme, onToggleTheme }) {
+  const [q, setQ] = useState('');
+  const [city, setCity] = useState(null);
+  const [seg, setSeg] = useState(null);
+
+  const filtered = PROSPECTS.filter(p => {
+    if (q && !p.name.toLowerCase().includes(q.toLowerCase())) return false;
+    if (city && p.city !== city) return false;
+    if (seg && p.segment !== seg) return false;
+    return true;
+  });
+
+  return (
+    <div className="screen screen-enter" data-screen-label="05 Prospeccao Lista">
+      <Header user={user} theme={theme} onToggleTheme={onToggleTheme} onBack={back} subtitle="Prospecção"/>
+      <div className="screen-pad">
+        <div className="eyebrow">Sua região</div>
+        <h2 className="h2 mt-1">Novos <em className="italic-serif">prospectos</em></h2>
+        <p className="lede">{filtered.length} oportunidades mapeadas pela IA</p>
+
+        <div className="mt-3"><SearchInput value={q} onChange={setQ} placeholder="Buscar prospecto..."/></div>
+
+        <FilterBar
+          filters={[
+            { key: 'city',    label: 'Cidade',   options: CITIES.slice(0, 6) },
+            { key: 'segment', label: 'Segmento', options: SEGMENTS },
+          ]}
+          values={{ city, segment: seg }}
+          onChange={(k, v) => { if(k==='city') setCity(v); if(k==='segment') setSeg(v); }}
+        />
+
+        <div className="list mt-3">
+          {filtered.map(p => (
+            <div key={p.id} className="client-row" onClick={()=>go('prospeccao-detalhe', { id: p.id })}>
+              <AvatarInit name={p.name}/>
+              <div className="body">
+                <div className="name">{p.name}</div>
+                <div className="sub">
+                  <Icon.pin size={11}/> {p.city}
+                  <span className="dot"/> {p.type}
+                </div>
+              </div>
+              <div className="end">
+                <span className="badge badge-accent">{p.segment}</span>
+                <Icon.chevronRight size={16}/>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   Screen 6 — Prospecção (detalhe)
+   ============================================================ */
+function ProspDetailScreen({ id, back, user, theme, onToggleTheme }) {
+  const p = PROSPECTS.find(x => x.id === id) || PROSPECTS[0];
+  const [mode, setMode] = useState(null); // 'roteiro' | 'ficha'
+  const [loading, setLoading] = useState(false);
+
+  function choose(m) {
+    setMode(m);
+    setLoading(true);
+    setTimeout(() => setLoading(false), 1600);
+  }
+
+  return (
+    <div className="screen screen-enter" data-screen-label="06 Prospeccao Detalhe">
+      <Header user={user} theme={theme} onToggleTheme={onToggleTheme} onBack={back} subtitle="Prospecção"/>
+      <div className="screen-pad">
+
+        <div className="card card-dark" style={{padding:'18px'}}>
+          <div className="row-between" style={{ alignItems: 'flex-start' }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div className="eyebrow" style={{ color: 'var(--on-inverse-muted)' }}>{p.type}</div>
+              <h2 className="h2 mt-1" style={{ color: 'var(--on-inverse)' }}>{p.name}</h2>
+              <div className="row mt-2 gap-2 txt-13" style={{ color: 'var(--on-inverse-muted)' }}>
+                <Icon.pin size={13}/> {p.city}
+              </div>
+            </div>
+            <Score value={p.score}/>
+          </div>
+        </div>
+
+        <div className="kpi-grid mt-3">
+          {p.google && <Kpi lbl="Avaliação Google" val={<><Icon.star size={13} style={{color:'var(--warn)', fill:'var(--warn)', verticalAlign:'-2px', marginRight:3}}/>{p.google.toFixed(1)}</>}/>}
+          <Kpi lbl="Reclamações" val={p.complaints > 0 ? `${p.complaints} registradas` : 'Sem registros'} small/>
+          <Kpi lbl="CNPJ" val={p.cnpjStatus || '—'} small/>
+          <Kpi lbl="Aberto em" val={p.abertura ? p.abertura : '—'} small/>
+          {p.isNew !== undefined && <Kpi lbl="Na base" val={p.isNew ? 'Novo prospecto' : 'Base antiga'} small/>}
+          {p.instagram !== undefined && <Kpi lbl="Instagram" val={p.instagram ? 'Ativo' : 'Não encontrado'} small/>}
+        </div>
+        {p.news && (
+          <div className="bordered-item" style={{background:'var(--info-soft)', borderLeftColor:'var(--info)', marginTop:10, fontSize:13}}>
+            <div className="eyebrow" style={{fontSize:10, marginBottom:4, color:'var(--info)'}}>Notícia encontrada</div>
+            {p.news}
+          </div>
+        )}
+
+        <div className="mt-4">
+          <div className="eyebrow mb-2">Como você quer abordar?</div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <button
+              onClick={()=>choose('roteiro')}
+              className={`card card-tap ${mode==='roteiro' ? 'card-dark' : ''}`}
+              style={{ padding: 16, display:'flex', flexDirection:'column', alignItems:'flex-start', gap:8, textAlign:'left', border:'1px solid var(--border)' }}>
+              <div style={{ width:36, height:36, borderRadius:10, background: mode==='roteiro' ? 'var(--accent)':'var(--accent-soft)', color: mode==='roteiro' ? 'white' : 'var(--accent-strong)', display:'grid', placeItems:'center' }}>
+                <Icon.phone size={16}/>
+              </div>
+              <div className="fw-6 txt-14">Roteiro de ligação</div>
+              <div className="txt-12" style={{ color: mode==='roteiro' ? 'var(--on-inverse-muted)' : 'var(--muted)' }}>Script para abordar por telefone</div>
+            </button>
+            <button
+              onClick={()=>choose('ficha')}
+              className={`card card-tap ${mode==='ficha' ? 'card-dark' : ''}`}
+              style={{ padding: 16, display:'flex', flexDirection:'column', alignItems:'flex-start', gap:8, textAlign:'left', border:'1px solid var(--border)' }}>
+              <div style={{ width:36, height:36, borderRadius:10, background: mode==='ficha' ? 'var(--accent)':'var(--accent-soft)', color: mode==='ficha' ? 'white' : 'var(--accent-strong)', display:'grid', placeItems:'center' }}>
+                <Icon.clipboard size={16}/>
+              </div>
+              <div className="fw-6 txt-14">Ficha de visita</div>
+              <div className="txt-12" style={{ color: mode==='ficha' ? 'var(--on-inverse-muted)' : 'var(--muted)' }}>Checklist e proposta presencial</div>
+            </button>
+          </div>
+        </div>
+
+        {mode && (
+          <div className="mt-4 fade-in">
+            <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+              {loading ? <AISpinner/> : mode === 'roteiro' ? <RoteiroPanel p={p}/> : <FichaPanel p={p}/>}
+            </div>
+          </div>
+        )}
+
+        <div className="mt-3">
+          <button className="btn btn-outline btn-block"><Icon.plus size={16}/> Adicionar à rota</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RoteiroPanel({ p }) {
+  const blocks = [
+    { lbl: 'Abertura', text: `Boa tarde! Aqui é o Carlos da Distribuidora Premium. Vi que vocês são referência em ${p.type.toLowerCase()} aqui em ${p.city} — tudo bem?` },
+    { lbl: 'Perguntas-chave', text: 'Como está a operação este mês? Quais cortes saem mais? Quem fornece hoje e há quanto tempo? Preço ou qualidade pesa mais?' },
+    { lbl: 'Objecções prováveis', text: '«Já tenho fornecedor» — proponha amostra. «Preço alto» — fale rendimento e margem. «Não conheço a marca» — referências na região.' },
+    { lbl: 'Fechamento', text: `Posso passar aí na quinta com amostra de picanha e ancho? É rápido, você avalia e decide.` },
+    { lbl: 'Dica da IA', text: `Esse perfil costuma fechar em ~3 contatos. Não tente vender no primeiro — agende a visita.`, tone: 'accent' },
+  ];
+  return (
+    <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div className="row gap-2 mb-1">
+        <Icon.phone size={14} color="var(--accent)"/>
+        <strong className="txt-14">Roteiro gerado para {p.name}</strong>
+      </div>
+      {blocks.map((b, i) => (
+        <div key={i} className={`bordered-item ${b.tone === 'accent' ? '' : ''}`}
+             style={b.tone === 'accent'
+               ? { background: 'var(--accent-soft)', borderLeftColor: 'var(--accent)' }
+               : {}}>
+          <div className="eyebrow" style={{ fontSize: 10, marginBottom: 4 }}>{b.lbl}</div>
+          <div>{b.text}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FichaPanel({ p }) {
+  const [checks, setChecks] = useState([false, false, false, false, false]);
+  const items = [
+    'Verificar dia/horário de menor movimento',
+    'Levar amostras: picanha, ancho, cupim limpo',
+    'Imprimir tabela com 3 opções de preço',
+    'Anotar fornecedor atual e prazos',
+    'Tirar foto da geladeira/expositor',
+  ];
+  function toggle(i) { setChecks(c => c.map((v, idx) => idx === i ? !v : v)); }
+
+  return (
+    <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <div>
+        <div className="row gap-2 mb-2">
+          <Icon.clipboard size={14} color="var(--accent)"/>
+          <strong className="txt-14">Checklist da visita</strong>
+        </div>
+        <div>
+          {items.map((it, i) => (
+            <div key={i} className={`check-row ${checks[i] ? 'is-checked' : ''}`} onClick={()=>toggle(i)}>
+              <div className="box">{checks[i] && <Icon.check size={13}/>}</div>
+              <div className="lbl">{it}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="bordered-item positive">
+        <div className="eyebrow" style={{ fontSize: 10, marginBottom: 4 }}>Proposta sugerida</div>
+        <div><strong>Combo introdutório:</strong> 20kg picanha + 10kg ancho com preço de lçamento. Pagamento 21d.</div>
+      </div>
+
+      <div className="bordered-item info">
+        <div className="eyebrow" style={{ fontSize: 10, marginBottom: 4 }}>Critérios de qualificação</div>
+        <div>Faturamento &gt; R$ 80k/mês · Compra cortes premium · CNPJ &gt; 12 meses · Sem restrições financeiras</div>
+      </div>
+
+      <div style={{ marginTop: 14 }}>
+        <div className="row gap-2 mb-2">
+          <Icon.refrigerator size={14} color="var(--muted)"/>
+          <strong className="txt-14">Prateleira / Expositor</strong>
+        </div>
+        <div className="bordered-item" style={{ background: 'var(--surface-2)' }}>
+          <div className="eyebrow" style={{ fontSize: 10, marginBottom: 6 }}>Marcas concorrentes observadas</div>
+          <ShelfField/>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ShelfField() {
+  const [brands, setBrands] = useState('');
+  const [products, setProducts] = useState('');
+  const [storage, setStorage] = useState('');
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <div>
+        <div className="eyebrow" style={{ fontSize: 10, marginBottom: 4 }}>Marcas presentes</div>
+        <input className="input" value={brands} onChange={e=>setBrands(e.target.value)} placeholder="Ex: Friboi, JBS, marca local..." style={{ fontSize: 13 }}/>
+      </div>
+      <div>
+        <div className="eyebrow" style={{ fontSize: 10, marginBottom: 4 }}>Cortes / produtos expostos</div>
+        <input className="input" value={products} onChange={e=>setProducts(e.target.value)} placeholder="Ex: picanha, contrafilé, linguiça..." style={{ fontSize: 13 }}/>
+      </div>
+      <div>
+        <div className="eyebrow" style={{ fontSize: 10, marginBottom: 4 }}>Condição de armazenamento</div>
+        <select className="select" value={storage} onChange={e=>setStorage(e.target.value)} style={{ fontSize: 13 }}>
+          <option value="">Selecione...</option>
+          <option value="freezer">Freezer — congelado</option>
+          <option value="geladeira">Geladeira — resfriado</option>
+          <option value="temperatura_ambiente">Temperatura ambiente</option>
+          <option value="misto">Misto (congelado + resfriado)</option>
+          <option value="sem_estrutura">Sem estrutura adequada</option>
+        </select>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   Screen 7 — Mapa & Rota
+   ============================================================ */
+function MapScreen({ back, user, theme, onToggleTheme }) {
+  const [city, setCity] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [route, setRoute] = useState([]); // array of client/prospect ids
+  const [aiText, setAiText] = useState(null);
+  const [aiLoading, setAiLoading] = useState(false);
+
+  // Combine clients + prospects into pin list with positions
+  const points = useMemo(() => {
+    const cli = CLIENTS.map((c, i) => ({
+      id: c.id, name: c.name, city: c.city, kind: 'client',
+      status: c.status === 'active' ? 'active' : 'inactive',
+      // semi-deterministic positions in [10..90]
+      x: 15 + ((i * 73) % 70), y: 15 + ((i * 47) % 65)
+    }));
+    const pro = PROSPECTS.map((p, i) => ({
+      id: p.id, name: p.name, city: p.city, kind: 'prospect',
+      status: 'prospect',
+      x: 10 + ((i * 91) % 75), y: 35 + ((i * 53) % 50)
+    }));
+    return [...cli, ...pro];
+  }, []);
+
+  const filtered = points.filter(p => {
+    if (city && p.city !== city) return false;
+    if (status && p.status !== status) return false;
+    return true;
+  });
+
+  function addToRoute(id) {
+    setRoute(r => r.includes(id) ? r : [...r, id]);
+    setAiText(null);
+  }
+  function removeFromRoute(id) { setRoute(r => r.filter(x => x !== id)); setAiText(null); }
+  function clearRoute() { setRoute([]); setAiText(null); }
+  function suggestAI() {
+    setAiLoading(true);
+    setAiText(null);
+    setTimeout(() => {
+      setAiLoading(false);
+      // reorder route smartly (cluster by city, prospects last)
+      const ids = [...route];
+      ids.sort((a, b) => {
+        const pa = points.find(p => p.id === a);
+        const pb = points.find(p => p.id === b);
+        return (pa.city + pa.kind).localeCompare(pb.city + pb.kind);
+      });
+      setRoute(ids);
+      setAiText('Rota agrupada por cidade. Começamos em Campinas (3 paradas), seguimos para Jundiáí e fechamos com 1 prospecto premium em Ribeirão Preto. Economia estimada: 28% de deslocamento.');
+    }, 1700);
+  }
+
+  const routeObjs = route.map(id => points.find(p => p.id === id)).filter(Boolean);
+
+  return (
+    <div className="screen screen-enter" data-screen-label="07 Mapa">
+      <Header user={user} theme={theme} onToggleTheme={onToggleTheme} onBack={back} subtitle="Mapa & Rota"/>
+      <div className="screen-pad">
+        <div className="eyebrow">Sua região</div>
+        <h2 className="h2 mt-1">Mapa <em className="italic-serif">&</em> rota</h2>
+
+        <FilterBar
+          filters={[
+            { key: 'city',   label: 'Cidade', options: CITIES.slice(0, 6) },
+            { key: 'status', label: 'Status', options: [
+              {value:'active', label:'Ativos'},
+              {value:'inactive', label:'Inativos'},
+              {value:'prospect', label:'Prospectos'},
+            ]},
+          ]}
+          values={{ city, status }}
+          onChange={(k, v) => { if(k==='city') setCity(v); if(k==='status') setStatus(v); }}
+        />
+
+        <div className="mt-3">
+          <FakeMap points={filtered} routeIds={route}/>
+        </div>
+        <div className="legend">
+          <span><span className="swatch" style={{background:'var(--positive)'}}/>Ativo</span>
+          <span><span className="swatch" style={{background:'var(--muted)'}}/>Inativo</span>
+          <span><span className="swatch" style={{background:'var(--accent)'}}/>Prospecto</span>
+          <span><span className="swatch" style={{background:'var(--info)'}}/>Na rota</span>
+        </div>
+
+        <div className="card mt-3">
+          <div className="row-between mb-2">
+            <div className="row gap-2"><Icon.map size={16}/> <strong className="txt-14">Rota de hoje</strong></div>
+            <span className="badge badge-counter">{route.length}</span>
+          </div>
+          {routeObjs.length === 0 ? (
+            <div className="bordered-item" style={{ background:'var(--surface-2)', borderLeftColor:'var(--border-strong)', color:'var(--muted)', fontSize: 13 }}>
+              Sua rota está vazia. Adicione clientes ou prospectos abaixo com <strong style={{color:'var(--ink)'}}>+ rota</strong>.
+            </div>
+          ) : (
+            <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
+              {routeObjs.map((p, i) => (
+                <div key={p.id} className="route-point">
+                  <span className="num">{i+1}</span>
+                  <div className="name">{p.name} <span className="txt-12 txt-muted">· {p.city}</span></div>
+                  <button className="x" onClick={()=>removeFromRoute(p.id)}><Icon.x size={14}/></button>
+                </div>
+              ))}
+            </div>
+          )}
+          <div className="row gap-2 mt-3" style={{ flexWrap: 'wrap' }}>
+            <button className="btn btn-primary btn-sm" disabled={routeObjs.length < 2} onClick={suggestAI}>
+              <Icon.sparkles size={14}/> Sugerir rota
+            </button>
+            <button className="btn btn-outline btn-sm" disabled={routeObjs.length === 0}>
+              <Icon.external size={14}/> Google Maps
+            </button>
+            <button className="btn btn-ghost btn-sm" disabled={routeObjs.length === 0} onClick={clearRoute}>
+              <Icon.trash size={14}/> Limpar
+            </button>
+          </div>
+          {aiLoading && (
+            <div className="mt-3"><AISpinner phrases={['Calculando trajeto...', 'Otimizando paradas...', 'Refinando ordem...']}/></div>
+          )}
+          {aiText && !aiLoading && (
+            <div className="ai-box fade-in mt-3">
+              <div className="lbl"><Icon.sparkles size={11}/> Sugestão da IA</div>
+              <div className="body">{aiText}</div>
+            </div>
+          )}
+        </div>
+
+        <div className="section mt-4">
+          <div className="section-title">Pontos disponíveis <span className="count">{filtered.length}</span></div>
+          <div className="list">
+            {[...filtered].sort((a,b) => {
+              const dA = CLIENTS.find(x=>x.id===a.id)?.lastVisitDays || 0;
+              const dB = CLIENTS.find(x=>x.id===b.id)?.lastVisitDays || 0;
+              return dB - dA;
+            }).map(p => {
+              const cli = CLIENTS.find(x=>x.id===p.id);
+              const overdue = cli && cli.lastVisitDays >= 7;
+              return (
+                <div key={p.id} className="client-row" style={{ cursor: 'default', borderColor: overdue ? 'var(--danger)' : undefined, background: overdue ? 'var(--danger-soft)' : undefined }}>
+                  <AvatarInit name={p.name}/>
+                  <div className="body">
+                    <div className="name">{p.name} {overdue && <span className="badge badge-danger" style={{marginLeft:6, fontSize:10}}>Prioridade · {cli.lastVisitDays}d</span>}</div>
+                    <div className="sub">
+                      <Icon.pin size={11}/> {p.city}
+                      <span className="dot"/>
+                      {p.kind === 'client' ? (p.status === 'active' ? 'Cliente ativo' : 'Cliente inativo') : 'Prospecto'}
+                    </div>
+                  </div>
+                  <div className="end">
+                    <button className="btn btn-sm btn-outline" disabled={route.includes(p.id)} onClick={()=>addToRoute(p.id)}>
+                      <Icon.plus size={12}/> {route.includes(p.id) ? 'na rota' : 'rota'}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FakeMap({ points, routeIds }) {
+  // Stylized "map" — abstract topographic shapes as backdrop
+  return (
+    <div className="map-wrap">
+      <svg viewBox="0 0 100 80" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.5 }}>
+        <defs>
+          <pattern id="grid" width="6" height="6" patternUnits="userSpaceOnUse">
+            <path d="M 6 0 L 0 0 0 6" fill="none" stroke="currentColor" strokeWidth="0.18" style={{color:'var(--border-strong)'}}/>
+          </pattern>
+        </defs>
+        <rect width="100" height="80" fill="url(#grid)"/>
+        {/* abstract land shapes */}
+        <path d="M0,40 Q20,30 35,38 T70,42 T100,38 L100,80 L0,80 Z" fill="currentColor" style={{color:'var(--border)'}} opacity="0.6"/>
+        <path d="M10,60 Q30,55 50,62 T90,58 L90,80 L10,80 Z" fill="currentColor" style={{color:'var(--border-strong)'}} opacity="0.4"/>
+        {/* roads */}
+        <path d="M5,20 Q40,25 65,40 T98,55" fill="none" stroke="currentColor" strokeWidth="0.5" style={{color:'var(--muted)'}} opacity="0.5"/>
+        <path d="M20,5 Q30,30 45,50 T70,75" fill="none" stroke="currentColor" strokeWidth="0.4" style={{color:'var(--muted)'}} opacity="0.4"/>
+        {/* route connecting lines */}
+        {routeIds.length > 1 && (() => {
+          const routePts = routeIds.map(id => points.find(p => p.id === id)).filter(Boolean);
+          if (routePts.length < 2) return null;
+          const path = routePts.map((p, i) => `${i===0?'M':'L'}${p.x},${p.y}`).join(' ');
+          return <path d={path} fill="none" stroke="var(--info)" strokeWidth="0.8" strokeDasharray="2 1.5" opacity="0.7"/>;
+        })()}
+      </svg>
+      {points.map(p => {
+        const inRoute = routeIds.includes(p.id);
+        const cls = inRoute ? 's-route in-route' : p.status === 'active' ? 's-active' : p.status === 'inactive' ? 's-inactive' : 's-prospect';
+        return (
+          <div key={p.id} className={`map-pin ${cls}`} style={{ left: `${p.x}%`, top: `${p.y}%` }} title={p.name}>
+            <div className="head"/>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ============================================================
+   Screen 8 — Indicadores
+   ============================================================ */
+function IndicadoresScreen({ back, user, theme, onToggleTheme }) {
+  const totalRev = CLIENTS.filter(c => c.status === 'active').reduce((s, c) => s + c.revenue, 0);
+  const ativos = CLIENTS.filter(c => c.status === 'active').length;
+  const inativos = CLIENTS.filter(c => c.status === 'inactive').length;
+  const baseProsp = PROSPECTS.length;
+  const convertidos = CONVERTED.length;
+  const topClients = [...CLIENTS].filter(c => c.status === 'active').sort((a,b) => b.revenue - a.revenue).slice(0, 5);
+  const maxRev = topClients[0]?.revenue || 1;
+
+  return (
+    <div className="screen screen-enter" data-screen-label="08 Indicadores">
+      <Header user={user} theme={theme} onToggleTheme={onToggleTheme} onBack={back} subtitle="Indicadores"/>
+      <div className="screen-pad">
+        <div className="eyebrow">Maio · 2026</div>
+        <h2 className="h2 mt-1">Seus <em className="italic-serif">resultados</em></h2>
+
+        <div className="kpi-big mt-3 fade-in">
+          <div className="lbl">Faturamento total · carteira</div>
+          <div className="val"><em>R$</em>{(totalRev/1000).toFixed(1).replace('.', ',')}<span className="italic-serif" style={{fontSize:24, marginLeft:4, color:'var(--on-inverse-muted)'}}>k</span></div>
+          <div className="delta"><Icon.trendUp size={13}/> +12,4% vs. abr</div>
+        </div>
+
+        <div className="kpi-grid mt-2 fade-in-delay-1">
+          <Kpi lbl="Clientes ativos" val={ativos}/>
+          <Kpi lbl="Inativos" val={inativos}/>
+          <Kpi lbl="Base prospecção" val={baseProsp}/>
+          <Kpi lbl="Convertidos" val={convertidos}/>
+        </div>
+
+        {CONVERTED.length > 0 && (
+          <div className="section mt-4 fade-in-delay-2">
+            <div className="section-title">Convertidos em clientes <span className="count">{CONVERTED.length}</span></div>
+            <div className="list">
+              {CONVERTED.map(c => (
+                <div key={c.id} className="card" style={{ padding: 14 }}>
+                  <div className="row gap-3 mb-2">
+                    <AvatarInit name={c.name} sm/>
+                    <div className="flex-1" style={{ minWidth: 0 }}>
+                      <div className="fw-6 txt-14">{c.name}</div>
+                      <div className="txt-12 txt-muted mt-1">{c.share}% da carteira · {brl(c.value)}/mês</div>
+                    </div>
+                    <div className="italic-serif" style={{ fontSize: 22, color: 'var(--accent)' }}>{c.share}%</div>
+                  </div>
+                  <Progress value={c.share} max={20} tone="accent"/>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="section mt-4 fade-in-delay-3">
+          <div className="section-title">Top clientes por faturamento <span className="count">5</span></div>
+          <div className="list">
+            {topClients.map((c, i) => (
+              <div key={c.id} className="card" style={{ padding: 12 }}>
+                <div className="row gap-3 mb-2">
+                  <div className="italic-serif" style={{ fontSize: 22, minWidth: 22, textAlign: 'right', color: i === 0 ? 'var(--accent)' : 'var(--muted)' }}>{i+1}</div>
+                  <AvatarInit name={c.name} sm/>
+                  <div className="flex-1" style={{ minWidth: 0 }}>
+                    <div className="fw-6 txt-14" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</div>
+                    <div className="txt-12 txt-muted">{c.city}</div>
+                  </div>
+                  <div className="tabular fw-6 txt-13">{brl(c.revenue, {compact:true})}</div>
+                </div>
+                <Progress value={c.revenue} max={maxRev} tone={i === 0 ? 'accent' : ''}/>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="section mt-4">
+          <div className="section-title">Últimas visitas <span className="count">{LAST_VISITS.length}</span></div>
+          <div className="list">
+            {LAST_VISITS.map(v => (
+              <div key={v.id} className={`visit-card ${v.pendingReturn ? 'pending' : ''}`}>
+                <div className="ico" style={{
+                  background: v.kind === 'positive' ? 'var(--positive-soft)' : v.kind === 'negative' ? 'var(--danger-soft)' : 'var(--warn-soft)',
+                  color: v.kind === 'positive' ? 'var(--positive-ink)' : v.kind === 'negative' ? 'var(--danger-ink)' : 'var(--warn-ink)'
+                }}>
+                  {v.kind === 'positive' ? <Icon.thumbsUp size={16}/> : v.kind === 'negative' ? <Icon.thumbsDown size={16}/> : <Icon.history size={16}/>}
+                </div>
+                <div className="body">
+                  <div className="row-between">
+                    <div className="name">{v.name}</div>
+                    {v.pendingReturn && <span className="badge badge-accent">Retornar</span>}
+                  </div>
+                  <div className="result">{v.result}{v.value ? ` · ${brl(v.value)}` : ''}</div>
+                </div>
+                <div className="date">{v.date}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   Screen 9 — Check-in de visita
+   ============================================================ */
+const RESULT_OPTIONS = [
+  { value: 'pedido_fechado',   label: 'Pedido fechado',           desc: 'Venda realizada nesta visita',                    kind: 'positive' },
+  { value: 'pedido_ampliado',  label: 'Pedido ampliado',          desc: 'Já era cliente e aumentou o volume',              kind: 'positive' },
+  { value: 'reativacao',       label: 'Reativação',               desc: 'Cliente inativo que voltou a comprar',            kind: 'positive' },
+  { value: 'amostra',          label: 'Entrega de amostra',       desc: 'Deixou amostra para avaliação',                   kind: 'neutral'  },
+  { value: 'demonstracao',     label: 'Demonstração realizada',   desc: 'Apresentou produto sem fechar pedido',            kind: 'neutral'  },
+  { value: 'negociacao',       label: 'Negociação em andamento',  desc: 'Está avaliando proposta enviada',                 kind: 'neutral'  },
+  { value: 'retornar',         label: 'Retornar depois',          desc: 'Precisa de nova visita agendada',                 kind: 'pending'  },
+  { value: 'nao_estava',       label: 'Não estava',               desc: 'Responsável ausente na visita',                   kind: 'pending'  },
+  { value: 'sem_interesse',    label: 'Sem interesse',            desc: 'Recusou a abordagem por enquanto',                kind: 'negative' },
+  { value: 'outros',           label: 'Outros',                   desc: 'Descreva nas observações',                        kind: 'neutral'  },
+];
+
+const CORTES_DISPONIVEIS = [
+  'Picanha','Contra-filé','Fraldinha','Maminha','Patinho','Alcatra',
+  'Cupim','Costela','Acém','Coxão mole','Coxão duro','Músculo',
+  'Linguiça','Ancho','Bife de chorizo','Filé mignon','Ossobuco',
+];
+
+function CheckInScreen({ back, user, theme, onToggleTheme }) {
+  const [clientInput, setClientInput] = useState('');
+  const [clientType, setClientType] = useState('');
+  const [result, setResult] = useState('');
+  const [orderValue, setOrderValue] = useState('');
+  const [selectedCuts, setSelectedCuts] = useState([]);
+  const [shelfBrands, setShelfBrands] = useState('');
+  const [shelfProducts, setShelfProducts] = useState('');
+  const [notes, setNotes] = useState('');
+  const [showToast, setShowToast] = useState(false);
+  const [leaving, setLeaving] = useState(false);
+
+  const allClients = [
+    ...CLIENTS.map(c=>({name:c.name, type:'ativo', badge:'badge-active'})),
+    ...CLIENTS.filter(c=>c.status==='inactive').map(c=>({name:c.name, type:'inativo', badge:'badge-inactive'})),
+    ...PROSPECTS.map(p=>({name:p.name, type:'prospecto', badge:'badge-accent'})),
+  ];
+
+  const selectedResult = RESULT_OPTIONS.find(r=>r.value===result);
+  const valid = clientInput.trim() && result;
+
+  function toggleCut(cut) {
+    setSelectedCuts(prev => prev.includes(cut) ? prev.filter(c=>c!==cut) : [...prev, cut]);
+  }
+
+  function save() {
+    if (!valid) return;
+    setShowToast(true);
+    setLeaving(false);
+    setTimeout(() => setLeaving(true), 2400);
+    setTimeout(() => {
+      setShowToast(false);
+      setClientInput(''); setClientType(''); setResult('');
+      setOrderValue(''); setSelectedCuts([]); setShelfBrands('');
+      setShelfProducts(''); setNotes('');
+    }, 2800);
+  }
+
+  const kindColor = { positive:'var(--positive)', neutral:'var(--info)', pending:'var(--warn)', negative:'var(--danger)' };
+
+  return (
+    <div className="screen screen-enter" data-screen-label="09 Checkin">
+      <Header user={user} theme={theme} onToggleTheme={onToggleTheme} onBack={back} subtitle="Check-in"/>
+      <div className="screen-pad" style={{ position: 'relative', minHeight: '100%' }}>
+        <div className="eyebrow">Registrar</div>
+        <h2 className="h2 mt-1">Como foi a <em className="italic-serif">visita?</em></h2>
+        <p className="lede">Registre os detalhes — leva menos de 1 minuto.</p>
+
+        <div className="card mt-3" style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+
+          {/* Cliente */}
+          <div className="field">
+            <label className="field-label">Cliente visitado</label>
+            <div className="input-icon">
+              <Icon.briefcase size={16}/>
+              <input className="input" value={clientInput} onChange={e=>{
+                setClientInput(e.target.value);
+                const found = allClients.find(cl=>cl.name.toLowerCase()===e.target.value.toLowerCase());
+                if(found) setClientType(found.type); else setClientType('');
+              }} placeholder="Nome do cliente ou prospecto..." list="ci-clients-list"/>
+              <datalist id="ci-clients-list">
+                {allClients.map((cl,i) => <option key={i} value={cl.name}/>)}
+              </datalist>
+            </div>
+            {clientType && (
+              <div className="mt-1">
+                <span className={`badge ${clientType==='ativo'?'badge-active':clientType==='inativo'?'badge-inactive':'badge-accent'}`}>
+                  {clientType==='ativo'?'Cliente ativo':clientType==='inativo'?'Cliente inativo':'Prospecto'}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Resultado */}
+          <div className="field">
+            <label className="field-label">Resultado da visita</label>
+            <select className="select" value={result} onChange={e=>setResult(e.target.value)}>
+              <option value="">Selecione o resultado...</option>
+              {RESULT_OPTIONS.map(r => (
+                <option key={r.value} value={r.value}>{r.label}</option>
+              ))}
+            </select>
+            {selectedResult && (
+              <div className="mt-1 bordered-item" style={{
+                borderLeftColor: kindColor[selectedResult.kind],
+                background: 'var(--surface-2)',
+                padding: '6px 10px',
+                fontSize: 12,
+                color: 'var(--muted)'
+              }}>
+                {selectedResult.desc}
+              </div>
+            )}
+          </div>
+
+          {/* Valor */}
+          {['pedido_fechado','pedido_ampliado','reativacao'].includes(result) && (
+            <div className="field">
+              <label className="field-label">Valor do pedido (R$)</label>
+              <div className="input-icon">
+                <Icon.dollar size={16}/>
+                <input className="input" type="number" value={orderValue} onChange={e=>setOrderValue(e.target.value)} placeholder="0,00"/>
+              </div>
+            </div>
+          )}
+
+          {/* Cortes selecionados */}
+          {['pedido_fechado','pedido_ampliado','reativacao','amostra'].includes(result) && (
+            <div className="field">
+              <label className="field-label">Cortes do pedido <span className="txt-12 txt-muted">(selecione todos)</span></label>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 6 }}>
+                {CORTES_DISPONIVEIS.map(cut => (
+                  <button key={cut} type="button"
+                    onClick={()=>toggleCut(cut)}
+                    style={{
+                      padding: '5px 11px', borderRadius: 20, fontSize: 12, fontWeight: 500,
+                      border: selectedCuts.includes(cut) ? '1.5px solid var(--accent)' : '1px solid var(--border)',
+                      background: selectedCuts.includes(cut) ? 'var(--accent-soft)' : 'var(--surface-2)',
+                      color: selectedCuts.includes(cut) ? 'var(--accent-strong)' : 'var(--muted)',
+                      cursor: 'pointer', transition: 'all 0.12s'
+                    }}>
+                    {selectedCuts.includes(cut) ? '✓ ' : ''}{cut}
+                  </button>
+                ))}
+              </div>
+              {selectedCuts.length > 0 && (
+                <div className="txt-12 txt-muted mt-2">{selectedCuts.length} corte{selectedCuts.length!==1?'s':''} selecionado{selectedCuts.length!==1?'s':''}</div>
+              )}
+            </div>
+          )}
+
+          {/* Prateleira */}
+          <div className="field">
+            <label className="field-label">Prateleira / Expositor <span className="txt-12 txt-muted">(opcional)</span></label>
+            <input className="input mb-2" value={shelfBrands} onChange={e=>setShelfBrands(e.target.value)} placeholder="Marcas concorrentes observadas..."/>
+            <input className="input" value={shelfProducts} onChange={e=>setShelfProducts(e.target.value)} placeholder="Cortes/produtos expostos..."/>
+          </div>
+
+          {/* Observações */}
+          <div className="field">
+            <label className="field-label">Observações</label>
+            <textarea className="textarea" value={notes} onChange={e=>setNotes(e.target.value)} placeholder="O que conversaram? Próximos passos? Informações relevantes..."/>
+          </div>
+
+          <button className="btn btn-primary btn-block" onClick={save} disabled={!valid}>
+            <Icon.send size={16}/> Salvar visita
+          </button>
+          {!valid && <p className="txt-12 txt-muted" style={{ textAlign: 'center', marginTop: 4 }}>Preencha cliente e resultado para salvar</p>}
+        </div>
+
+        {showToast && (
+          <div className={`toast-success ${leaving ? 'is-leaving' : ''}`}>
+            <Icon.check size={18}/>
+            <div className="flex-1">Visita registrada com sucesso!</div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, {
+  ProspListScreen, ProspDetailScreen, MapScreen, IndicadoresScreen, CheckInScreen,
+});
+
+  </script>
+
+  <script type="text/babel" data-presets="react">
+/* =========================================================================
+   APP SHELL — routing, theme, palette, tweaks panel
+   ========================================================================= */
+/* eslint-disable */
+/* Prospex BI — App shell with routing, theme, tweaks */
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "density": "comfortable",
+  "theme": "light",
+  "palette": "default"
+}/*EDITMODE-END*/;
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [route, setRoute] = useState({ name: 'login', params: {} });
+  const [history, setHistory] = useState([]);
+
+  // Apply theme + density + palette to <html>
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', t.theme);
+    document.documentElement.setAttribute('data-density', t.density);
+    if (t.palette && t.palette !== 'default') {
+      document.documentElement.setAttribute('data-palette', t.palette);
+    } else {
+      document.documentElement.removeAttribute('data-palette');
+    }
+  }, [t.theme, t.density, t.palette]);
+
+  function go(name, params = {}) {
+    setHistory(h => [...h, route]);
+    setRoute({ name, params });
+    // scroll the screen container to top after transition
+    requestAnimationFrame(() => {
+      const el = document.querySelector('.screen');
+      if (el) el.scrollTop = 0;
+    });
+  }
+  function back() {
+    setHistory(h => {
+      if (h.length === 0) return h;
+      const prev = h[h.length - 1];
+      setRoute(prev);
+      return h.slice(0, -1);
+    });
+  }
+  function logout() {
+    setRoute({ name: 'login', params: {} });
+    setHistory([]);
+  }
+  function toggleTheme() {
+    setTweak('theme', t.theme === 'dark' ? 'light' : 'dark');
+  }
+
+  const user = MOCK_USER;
+  const common = { user, theme: t.theme, onToggleTheme: toggleTheme };
+
+  let view;
+  switch (route.name) {
+    case 'login':
+      view = <LoginScreen onLogin={() => go('home')} theme={t.theme} onToggleTheme={toggleTheme}/>;
+      break;
+    case 'home':
+      view = <HomeScreen go={go} onLogout={logout} {...common}/>;
+      break;
+    case 'diagnostico':
+      view = <DiagListScreen go={go} back={back} {...common}/>;
+      break;
+    case 'diagnostico-detalhe':
+      view = <DiagDetailScreen id={route.params.id} back={back} {...common}/>;
+      break;
+    case 'prospeccao':
+      view = <ProspListScreen go={go} back={back} {...common}/>;
+      break;
+    case 'prospeccao-detalhe':
+      view = <ProspDetailScreen id={route.params.id} back={back} {...common}/>;
+      break;
+    case 'mapa':
+      view = <MapScreen back={back} {...common}/>;
+      break;
+    case 'indicadores':
+      view = <IndicadoresScreen back={back} {...common}/>;
+      break;
+    case 'checkin':
+      view = <CheckInScreen back={back} {...common}/>;
+      break;
+    default:
+      view = <HomeScreen go={go} {...common}/>;
+  }
+
+  return (
+    <div className="stage">
+      <div className="device" key={route.name + JSON.stringify(route.params)}>
+        {view}
+      </div>
+      <TweaksPanel>
+        <TweakSection label="Paleta">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 6, padding: '4px 14px 8px' }}>
+            {[
+              { v: 'default', name: 'Mono + Azul',    bg: '#ffffff', ink: '#09090b', accent: '#2563eb' },
+              { v: 'warm',    name: 'Creme + Coral',  bg: '#f4efe6', ink: '#15110e', accent: '#e94b27' },
+              { v: 'lime',    name: 'Mono + Lima',    bg: '#fafafa', ink: '#09090b', accent: '#65a30d' },
+              { v: 'navy',    name: 'Azul Naval',     bg: '#f8fafc', ink: '#0c2340', accent: '#0891b2' },
+              { v: 'plum',    name: 'Stone + Roxo',   bg: '#fafaf9', ink: '#1c1917', accent: '#9333ea' },
+            ].map(p => (
+              <button key={p.v}
+                      onClick={()=>setTweak('palette', p.v)}
+                      title={p.name}
+                      style={{
+                        height: 38, padding: 0, borderRadius: 8, cursor: 'pointer',
+                        border: t.palette === p.v ? '2px solid #2563eb' : '1px solid rgba(0,0,0,0.15)',
+                        background: p.bg, position: 'relative', overflow: 'hidden',
+                      }}>
+                <span style={{ position:'absolute', left:5, top:5, width:11, height:11, borderRadius:3, background: p.ink }}/>
+                <span style={{ position:'absolute', right:5, bottom:5, width:16, height:16, borderRadius:'50%', background: p.accent }}/>
+              </button>
+            ))}
+          </div>
+        </TweakSection>
+        <TweakSection label="App">
+          <TweakRadio label="Densidade" value={t.density} onChange={v=>setTweak('density', v)}
+                      options={[{value:'comfortable', label:'Confort.'}, {value:'compact', label:'Compacto'}]}/>
+          <TweakRadio label="Tema" value={t.theme} onChange={v=>setTweak('theme', v)}
+                      options={[{value:'light', label:'Claro'}, {value:'dark', label:'Escuro'}]}/>
+        </TweakSection>
+        <TweakSection label="Ir para tela">
+          <TweakButton label="01 · Login" onClick={()=>go('login')}/>
+          <TweakButton label="02 · Home" onClick={()=>go('home')}/>
+          <TweakButton label="03 · Diagnóstico — lista" onClick={()=>go('diagnostico')}/>
+          <TweakButton label="04 · Diagnóstico — detalhe" onClick={()=>go('diagnostico-detalhe', {id:'c1'})}/>
+          <TweakButton label="05 · Prospecção — lista" onClick={()=>go('prospeccao')}/>
+          <TweakButton label="06 · Prospecção — detalhe" onClick={()=>go('prospeccao-detalhe', {id:'p3'})}/>
+          <TweakButton label="07 · Mapa & Rota" onClick={()=>go('mapa')}/>
+          <TweakButton label="08 · Indicadores" onClick={()=>go('indicadores')}/>
+          <TweakButton label="09 · Check-in de visita" onClick={()=>go('checkin')}/>
+        </TweakSection>
+      </TweaksPanel>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+
+  </script>
+</body>
+</html>
